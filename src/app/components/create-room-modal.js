@@ -2,11 +2,13 @@ import React, { useState } from 'react'
 import styles from './create-room-modal.module.css'
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useRouter } from 'next/navigation';
 
 export default function CreateGroupModal({ show, onClose }) {
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [loading, setLoading] = useState(false);
+    const router = useRouter();
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
@@ -43,6 +45,10 @@ export default function CreateGroupModal({ show, onClose }) {
             setLoading(false);
         }
     }
+    const handleCancel = () => {
+        router.push('/rooms');
+        onClose();
+    }
     return (
         <div className={styles.createRoomModal} style={{ display: show ? 'flex' : 'none' }}>
             <ToastContainer />
@@ -60,7 +66,7 @@ export default function CreateGroupModal({ show, onClose }) {
                 </div>
                 <div className={styles.createRoomModalButtons}>
                     <button type="submit" disabled={loading}>{loading ? "Creating..." : "Create"}</button>
-                    <button type="button" onClick={onClose}>Cancel</button>
+                    <button type="button" onClick={handleCancel}>Cancel</button>
                 </div>
             </form>
         </div>

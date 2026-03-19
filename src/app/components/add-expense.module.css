@@ -16,6 +16,7 @@
     from {
         opacity: 0;
     }
+
     to {
         opacity: 1;
     }
@@ -44,6 +45,7 @@
         opacity: 0;
         transform: scale(0.92) translateY(-12px);
     }
+
     to {
         opacity: 1;
         transform: scale(1) translateY(0);
@@ -54,6 +56,7 @@
     from {
         opacity: 0;
     }
+
     to {
         opacity: 1;
     }
@@ -187,11 +190,12 @@
     border-color: rgba(19, 163, 87, 0.35);
 }
 
-.participantRow input[type="checkbox"]{
+.participantRow input[type="checkbox"] {
     width: 12px;
     height: 12px;
     accent-color: #13a357;
 }
+
 .selectAll input[type="checkbox"] {
     accent-color: #13a357;
     width: 14px;
@@ -256,4 +260,111 @@
 .addExpenseModalButtons {
     display: flex;
     gap: 1rem;
+}
+
+@media (max-width: 480px) {
+    .addExpenseModal form {
+        min-height: 35%;
+        width: 85%;
+        max-width: 85%;
+        gap: 1rem;
+        border-radius: 8px;
+        padding: 1.5rem 2rem;
+        box-shadow: 0px 0px 10px rgb(71, 71, 71);
+    }
+
+    .addExpenseModal form h1 {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .addExpenseModalFormContent {
+        gap: 0.5rem;
+        width: 100%;
+    }
+
+    .addExpenseModal form label {
+        gap: 0.2rem;
+    }
+
+    .addExpenseModal form label span {
+        font-size: 0.9rem;
+    }
+
+    .addExpenseModal form input {
+        width: 65%;
+        height: 100%;
+        padding: 0.3rem 0.4rem;
+        font-size: 0.8rem;
+        border-radius: 6px;
+    }
+
+    .participantsContainer {
+        gap: 0.2rem;
+    }
+
+    .participants {
+        width: 65%;
+        max-height: 110px;
+        gap: 0.5rem;
+        padding: 0.3rem;
+        border-radius: 8px;
+        overflow: auto;
+    }
+
+    .participantsHeader {
+        gap: 0.2rem;
+    }
+
+    .participantsTitle {
+        font-size: 0.9rem;
+    }
+
+    .selectAll {
+        gap: 0.2rem;
+        font-size: 0.8rem;
+    }
+
+
+    .participantsList {
+        gap: 0.2rem;
+    }
+
+    .participantRow {
+        gap: 0.2rem;
+        padding: 0.2rem;
+        border-radius: 6px;
+    }
+
+    .participantRow p {
+        font-size: 0.7rem;
+    }
+
+    .participantRow input[type="checkbox"] {
+        width: 10px;
+        height: 10px;
+    }
+
+    .selectAll input[type="checkbox"] {
+        accent-color: #13a357;
+        width: 12px;
+        height: 12px;
+    }
+
+    .participantsEmpty {
+        font-size: 0.7rem;
+        padding: 0.3rem 0;
+    }
+
+    .addExpenseModal form button {
+        width: 120px;
+        height: 100%;
+        padding: 0.3rem 0.4rem;
+        font-size: 0.8rem;
+        border-radius: 6px;
+    }
+
+    .addExpenseModalButtons {
+        gap: 0.5rem;
+    }
 }

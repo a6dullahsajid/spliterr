@@ -1,3 +1,6 @@
+/* eslint-disable react/no-unknown-property */
+"use client";
+
 import React, { useEffect, useMemo, useState } from "react";
 import styles from "./add-expense.module.css";
 import { ToastContainer, toast } from "react-toastify";
@@ -58,7 +61,10 @@ export default function AddExpense({ show, onClose, room, onAdded }) {
         }
 
         try {
-            const token = localStorage.getItem("token");
+            const token =
+                typeof window !== "undefined"
+                    ? localStorage.getItem("token")
+                    : null;
             if (!token) {
                 toast.error("Please login again.");
                 setLoading(false);

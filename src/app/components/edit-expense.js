@@ -33,7 +33,10 @@ export default function EditExpense({ show, onClose, onUpdated, expense }) {
         }
 
         try {
-            const token = localStorage.getItem("token");
+            const token =
+                typeof window !== "undefined"
+                    ? localStorage.getItem("token")
+                    : null;
             if (!token) {
                 toast.error("Please login again.");
                 setLoading(false);

@@ -18,6 +18,8 @@ export default function RoomsPage() {
     useEffect(() => {
         document.title = "Spliterr - Groups";
 
+        if (typeof window === "undefined") return;
+
         const token = localStorage.getItem("token");
 
         if (!token) {
@@ -28,7 +30,7 @@ export default function RoomsPage() {
         const getRooms = async () => {
             const res = await fetch('/api/rooms', {
                 headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                    'Authorization': `Bearer ${token}`,
                 },
             });
             const data = await res.json();
@@ -46,7 +48,7 @@ export default function RoomsPage() {
         <>
 
             <ToastContainer />
-            {loading && <LoadingOverlay/>}
+            {loading && <LoadingOverlay />}
             <CreateGroupModal show={showCreateGroupModal} onClose={() => setShowCreateGroupModal(false)} />
             <JoinRoomModal show={showJoinRoomModal} onClose={() => setShowJoinRoomModal(false)} />
             <div className={styles.roomsContainer}>
@@ -67,12 +69,17 @@ export default function RoomsPage() {
                     {rooms.map(room => (
                         <div onClick={() => router.push(`/rooms/${room._id}`)} key={room._id} className={styles.roomCard}>
                             <h3>{room.name}</h3>
-                            <p><span>Leader:</span> {room.leader.name}</p>
-                            <p><span>Members:</span> {room.members.map((member, index)=>{
-                                return (
-                                    <span key={index}>{member.name}{index < room.members.length - 1 ? ', ' : ''}</span>
-                                )
-                            })}</p>
+                            <p><div>Leader:</div> {room.leader.name}</p>
+                            <p><div>Members:</div>
+                                <div className={styles.membersList}>
+                                    {room.members.map((member, index) => {
+                                        return (
+
+                                            <span key={index}>{member.name}{index < room.members.length - 1 ? ', ' : ''}</span>
+                                        )
+                                    })}
+                                </div>
+                            </p>
                         </div>
                     ))}
                 </div>

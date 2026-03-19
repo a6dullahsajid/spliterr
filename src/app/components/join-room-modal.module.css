@@ -193,3 +193,78 @@
     display: flex;
     gap: 1rem;
 }
+
+
+@media (max-width: 480px) {
+    .joinRoomModal form {
+        width: 70%;
+        min-height: 160px;
+        padding: 0.8rem 0rem;
+        gap: 1rem;
+        box-shadow: 0px 0px 14px rgb(71, 71, 71);
+    }
+    
+    .joinRoomModal form h1 {
+        font-size: 1.8rem;
+        margin-bottom: 0.2rem;
+    }
+    
+    .joinRoomModal form label {
+        font-size: 0.8rem;
+    }
+
+    .joinRoomModal form label span {
+        font-size: 0.8rem;
+    }
+    
+    .joinRoomModal form input {
+        width: 100%;
+        height: 100%;
+        padding: 0.3rem 0.4rem;
+        font-size: 0.8rem;
+        border-radius: 4px;
+    }
+    
+    .joinRoomModal form button {
+        width: 80px;
+        height: 24px;
+        padding: 0.3rem 0.4rem;
+        font-size: 0.8rem;
+        border-radius: 4px;
+    }
+    
+    .joinRoomModal form button:first-child {
+        background: linear-gradient(135deg, #0adc2a, #13a357);
+        color: #ffffff;
+        border: none;
+        box-shadow: 0 2px 12px #00000040;
+    }
+
+    .joinRoomModal form button:hover {
+        background: white;
+        color: black;
+        border: 1px solid #333333;
+        transform: scale(1.02);
+        box-shadow: 0 0px 8px rgba(0, 0, 0, 0.35);
+    }
+    
+    .joinRoomModal form button:first-child:hover {
+        background: linear-gradient(135deg, #13a357, #0adc2a);
+        transform: scale(1.02);
+        box-shadow: 0 0px 8px rgba(0, 0, 0, 0.35);
+        color: white;
+    }
+    
+    .joinRoomModal form button:disabled {
+        background-color: #333333;
+        border: 1px solid #444444;
+        color: #ffffff;
+        cursor: not-allowed;
+        transform: scale(1.02);
+        box-shadow: 0 0px 8px rgba(0, 0, 0, 0.35);
+    }
+    
+    .joinRoomModalButtons {
+        gap: 0.5rem;
+    }
+}

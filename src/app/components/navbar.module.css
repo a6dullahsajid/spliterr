@@ -137,3 +137,62 @@
     width: 1.2rem;
     height: 1.2rem;
 }
+
+@media (max-width: 480px) {
+    .navbar {
+        padding: 0.5rem 0.8rem;
+        height: 7vh;
+    }
+
+    .logoText {
+        font-size: 2rem;
+    }
+
+    .menuContainer {
+        gap: 0.5rem;
+    }
+
+    .dropdownMenu {
+        gap: 0.5rem;
+    }
+
+    .dropdownMenu button {
+        font-size: 0.7rem;
+        padding: 0.25rem 0.4rem;
+        gap: 0.01rem;
+        width: 100%;
+        border-radius: 6px;
+        text-align: center;
+        cursor: pointer;
+    }
+
+    .dropdownMenu button svg {
+        width: 1rem;
+        height: 1rem;
+    }
+
+    .dropdownMenuContent {
+        left: -10%;
+        width: 90px;
+        border-radius: 6px;
+    }
+
+    .dropdownMenuContent a {
+        font-size: 0.7rem;
+        padding: 0.25rem 0.4rem;
+    }
+    
+    .dropdownButton {
+        font-size: 0.7rem;
+    }
+
+    .loginButton {
+        padding: 0.3rem 0.5rem;
+        font-size: 0.7rem;
+    }
+
+    .loginButton svg {
+        width: 1rem;
+        height: 1rem;
+    }
+}

@@ -143,3 +143,62 @@
 .signupLink a:hover {
     text-decoration: underline;
 }
+
+@media (max-width: 480px) {
+    .loginContainer {
+        height: 90vh;
+    }
+
+    .loginForm {
+        width: 75%;
+        min-height: 220px;
+        padding: 0.8rem 0rem;
+        box-shadow: 0px 0px 14px rgb(71, 71, 71);
+    }
+
+    .loginFormContent {
+        width: 80%;
+    }
+
+    .loginTitle {
+        font-size: 1.8rem;
+        margin-bottom: 1rem;
+    }
+
+    .loginSubtitle {
+        font-size: 0.9rem;
+    }
+
+    .label {
+        gap: 0.3rem;
+    }
+
+    .label span {
+        font-size: 0.8rem;
+    }
+
+    .label input {
+        width: 150px;
+        height: 20px;
+        font-size: 0.8rem;
+        border-radius: 4px;
+        padding: 0.3rem 0.2rem;
+    }
+
+    .showPassword {
+        font-size: 0.7rem;
+        right: 2.2rem;
+    }
+
+    .submitButton {
+        height: 30px;
+        border-radius: 4px;
+        padding: 0.3rem 0.5rem;
+        font-size: 0.8rem;
+    }
+
+    .signupLink {
+        font-size: 0.8rem;
+        margin-top: 0.5rem;
+    }
+}   

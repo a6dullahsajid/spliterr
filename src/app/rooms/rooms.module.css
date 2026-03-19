@@ -64,7 +64,7 @@
     display: flex; 
     justify-content: center;
     align-items: center;
-    overflow-wrap: wrap;
+    flex-wrap: wrap;
     gap: 2rem;
     width: 100%;
     height: fit-content;
@@ -107,13 +107,65 @@
     font-size: 1rem;
     font-weight: 400;
     color: #c6c6c6;
+    align-items: baseline;
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 
-.roomCard p span {
-    display: inline-block;
+.roomCard p div {
     font-size: 1.1rem;
     font-weight: 600;
     color: #f3f3f3;
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+
+@media (max-width: 480px) {
+    .roomsHeader h1 {
+        font-size: 2rem;
+    }
+    
+    .roomsHeader p {
+        font-size: 1.2rem;
+        text-align: center;
+        width: 90%;
+    }
+    
+    .roomsHeader .buttons button {
+        font-size: 0.8rem;
+    }
+
+    .roomsList {
+        gap: 1rem;
+    }
+
+    .roomCard {
+        width: 90%;
+        overflow-wrap: wrap;
+        flex-wrap: wrap;
+    }
+
+    .roomCard h3 {
+        font-size: 1.5rem;
+    }
+
+    .roomCard p {
+        font-size: 0.8rem;
+        gap: 0.2rem;
+    }
+
+    .roomCard p .membersList {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.2rem;
+    }
+
+    .roomCard p .membersList div {
+        font-size: 0.75rem;
+        color: #cfcfcf;
+    }
+
+    .roomCard p div {
+        font-size: 0.7rem;
+        display: flex;
+    }
 }

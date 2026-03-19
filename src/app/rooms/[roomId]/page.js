@@ -12,8 +12,8 @@ import EditExpense from '@/app/components/edit-expense';
 import SettleOverlay from '@/app/components/SettleOverlay';
 
 export default function RoomPage() {
-    const user = JSON.parse(localStorage.getItem('user'));
     const { roomId } = useParams();
+    const [user, setUser] = useState(null);
     const [refreshKey, setRefreshKey] = useState(0);
     const [expenses, setExpenses] = useState(null);
     const [balances, setBalances] = useState(null);
@@ -54,10 +54,33 @@ export default function RoomPage() {
         return `${dd}/${month}/${yyyy}, ${time}`;
     };
     useEffect(() => {
+        if (typeof window === "undefined") return;
+
+        const token = localStorage.getItem('token');
+        const storedUser = localStorage.getItem('user');
+
+        let parsedUser = null;
+        if (storedUser) {
+            try {
+                parsedUser = JSON.parse(storedUser);
+            } catch {
+                parsedUser = null;
+            }
+        }
+
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        setUser(parsedUser);
+
+        if (!token) {
+            toast.error("Please login first");
+            setLoading(false);
+            return;
+        }
+
         const getExpenses = async () => {
             const res = await fetch(`/api/rooms/${roomId}/expenses`, {
                 headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                    'Authorization': `Bearer ${token}`,
                 },
             });
             const data = await res.json();
@@ -72,7 +95,7 @@ export default function RoomPage() {
         const getBalances = async () => {
             const res = await fetch(`/api/rooms/${roomId}/balance`, {
                 headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                    'Authorization': `Bearer ${token}`,
                 },
             });
             const data = await res.json();
@@ -85,7 +108,7 @@ export default function RoomPage() {
         const getSummary = async () => {
             const res = await fetch(`/api/rooms/${roomId}/summary`, {
                 headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                    'Authorization': `Bearer ${token}`,
                 },
             });
             const data = await res.json();
@@ -98,7 +121,7 @@ export default function RoomPage() {
         const getSimplifiedDebts = async () => {
             const res = await fetch(`/api/rooms/${roomId}/simplified-debts`, {
                 headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                    'Authorization': `Bearer ${token}`,
                 },
             });
             const data = await res.json();
@@ -111,7 +134,7 @@ export default function RoomPage() {
         const getRoom = async () => {
             const res = await fetch(`/api/rooms/${roomId}`, {
                 headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                    'Authorization': `Bearer ${token}`,
                 },
             });
             const data = await res.json();
@@ -142,10 +165,21 @@ export default function RoomPage() {
         if (!expenseToDelete) return;
         setDeleting(true);
         try {
+            const token =
+                typeof window !== "undefined"
+                    ? localStorage.getItem('token')
+                    : null;
+
+            if (!token) {
+                toast.error('Please login again.');
+                setDeleting(false);
+                return;
+            }
+
             const res = await fetch(`/api/rooms/${roomId}/expenses/${expenseToDelete._id}`, {
                 method: 'DELETE',
                 headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                    'Authorization': `Bearer ${token}`,
                 },
             });
             const data = await res.json();
@@ -313,7 +347,7 @@ export default function RoomPage() {
                         {/* DEBTS */}
                         <div className={styles.debtBox}>
                             {showDetailedReport && (
-                                <div className={styles.detailedReport}>
+                                <>
                                     <h3>Detailed Report</h3>
                                     {balances?.length === 0 && <p>No debts 🎉</p>}
                                     {balances?.map((d, i) => (
@@ -322,7 +356,7 @@ export default function RoomPage() {
                                         </p>
                                     ))}
                                     <button onClick={() => setShowDetailedReport(false)}>Get simplified report <FaChevronUp /></button>
-                                </div>
+                                </>
                             )}
                             {!showDetailedReport && (
                                 <>
@@ -362,7 +396,7 @@ export default function RoomPage() {
                                 {expenses?.map((expense) => (
                                     <tr key={expense._id}>
                                         <td>{expense.description}</td>
-                                        <td style={{ color: user.name === expense.paidBy.name ? '#0adc2a' : '#white' }}>{expense.paidBy.name}</td>
+                                        <td style={{ color: user?.name === expense.paidBy.name ? '#0adc2a' : '#white' }}>{expense.paidBy.name}</td>
                                         <td>{expense.participants.map(p => p.name).join(", ")}</td>
                                         <td>{formatExpenseTimestamp(expense.createdAt)}</td>
                                         <td>₹{expense.amount}</td>
