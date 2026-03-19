@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from 'react'
+import React, { Suspense, useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation';
 import styles from './rooms.module.css'
 import { ToastContainer, toast } from 'react-toastify';
@@ -50,7 +50,11 @@ export default function RoomsPage() {
             <ToastContainer />
             {loading && <LoadingOverlay />}
             <CreateGroupModal show={showCreateGroupModal} onClose={() => setShowCreateGroupModal(false)} />
-            <JoinRoomModal show={showJoinRoomModal} onClose={() => setShowJoinRoomModal(false)} />
+            {showJoinRoomModal && (
+                <Suspense fallback={null}>
+                    <JoinRoomModal show={showJoinRoomModal} onClose={() => setShowJoinRoomModal(false)} />
+                </Suspense>
+            )}
             <div className={styles.roomsContainer}>
                 <div className={styles.roomsHeader}>
                     <h1>Your Groups</h1>

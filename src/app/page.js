@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import styles from "./home.module.css";
 // import Modal from "./components/Modal";
@@ -66,7 +66,11 @@ export default function HomePage() {
   return (
     <>
       <CreateGroupModal show={showCreateGroupModal} onClose={() => setShowCreateGroupModal(false)} />
-      <JoinRoomModal show={showJoinRoomModal} onClose={() => setShowJoinRoomModal(false)} />
+      {showJoinRoomModal && (
+        <Suspense fallback={null}>
+          <JoinRoomModal show={showJoinRoomModal} onClose={() => setShowJoinRoomModal(false)} />
+        </Suspense>
+      )}
       <ToastContainer />
       {/* <main className={styles.homeContainer}>
         <section className={styles.homeContent}>
