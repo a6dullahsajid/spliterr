@@ -1,0 +1,128 @@
+.homeContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #000000;
+}
+
+.homeContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 74vh;
+    padding-top: 20vh;
+    gap: 2rem;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    width: 60%;
+}
+
+.homeTitle {
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: #ffffff;
+    text-align: center;
+}
+
+.homeSubtitle {
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: #c6c6c6;
+    text-align: center;
+}
+
+.homeButtons {
+    display: flex;
+    gap: 1rem;
+}
+
+.homeButtons button {
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #ffffff;
+    background: #212520;
+    border: none;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    border: 2px solid #3a3a3a;
+}
+
+.homeButtons button:nth-child(1) {
+    background: none;
+}
+
+.homeButtons button:hover {
+    border: 2px solid white;
+    background: white;
+    color: black;
+}
+
+.homeFeatures {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 7rem;
+    gap: 2rem;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    width: 100%;
+    height: 100vh;
+}
+
+.homeFeaturesTitle {
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: #e8e8e8;
+    text-align: center;
+}
+
+.featuresContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.featureCard {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.featureCardTitle {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #c6c6c6;
+}
+
+.featureCardDescription {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 400;
+    color: #c6c6c6;
+    border: 1px solid #3a3a3a;
+    background: #181a18;
+    border-radius: 8px;
+    padding: 2rem 1rem;
+    width: 300px;
+    height: 150px;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.rightArrow {
+    display: flex;
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: #e8e8e8;
+    padding-top: 3.3rem;
+    height: 100%;
+}

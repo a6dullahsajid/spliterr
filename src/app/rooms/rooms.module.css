@@ -1,0 +1,119 @@
+.roomsContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    width: 100vw;
+    height: 100vh;
+    overflow-y: auto;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.roomsHeader {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding-top: 5rem;
+}
+
+.roomsHeader h1 {
+    font-size: 2.5rem;
+    text-align: center;
+}
+
+.roomsHeader p {
+    font-size: 1.5rem;
+    color: #c6c6c6;
+    text-align: center;
+}
+
+.roomsHeader .buttons {
+    display: flex;
+    gap: 1rem;
+    padding-top: 1rem;
+}
+
+.roomsHeader .buttons button {
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #ffffff;
+    background: #272727;
+    border: 1px solid #333333;
+    box-shadow: 0 2px 12px #00000040;
+    transition: all 0.25s ease;
+}
+
+.roomsHeader .buttons button:first-child {
+    background: transparent;
+    color: #ffffff;
+}
+
+.roomsHeader .buttons button:hover {
+    background: white;
+    color: black;
+    transform: scale(1.01);
+    box-shadow: 0 0px 4px rgba(0, 0, 0, 0.35);
+}
+
+.roomsList {    
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+    overflow-wrap: wrap;
+    gap: 2rem;
+    width: 100%;
+    height: fit-content;
+}
+
+.roomCard {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
+    gap: 1rem;
+    width: 30%;
+    height: fit-content;
+    background: #272727;
+    border: 1px solid #444444;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 2px 12px #00000040;
+    transition: all 0.4s ease;
+    cursor: pointer;
+}
+
+.roomCard:hover {
+    box-shadow: 0 0px 15px rgba(161, 161, 161, 0.2);
+    transform: translateY(-5px);
+
+}
+
+.roomCard h3 {
+    font-size: 1.7rem;
+    font-weight: 600;
+    color: #ffffff;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+
+.roomCard p {
+    display: flex;
+    gap: 0.2rem;
+    font-size: 1rem;
+    font-weight: 400;
+    color: #c6c6c6;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+.roomCard p span {
+    display: inline-block;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #f3f3f3;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
