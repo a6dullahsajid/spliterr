@@ -5,6 +5,7 @@ import styles from './navbar.module.css'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
+import Image from 'next/image';
 
 export default function Navbar() {
     const router = useRouter();
@@ -69,7 +70,7 @@ export default function Navbar() {
         <nav className={styles.navbar}>
             <div className={styles.logoContainer}>
                 <h1 className={styles.logoText}>
-                    <Link href="/">Spliterr</Link></h1>
+                    <Link href="/"><Image src="/logo.png" alt="Spliterr" width={100} height={100} />pliterr</Link></h1>
             </div>
             <div className={styles.menuContainer}>
                 {auth.loggedIn ? (

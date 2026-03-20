@@ -205,6 +205,11 @@
         right: 2.2rem;
     }
 
+    .forgotPasswordLink {
+        font-size: 0.7rem;
+        top: -0.68rem;
+    }
+
     .submitButton {
         height: 30px;
         border-radius: 4px;

@@ -16,7 +16,10 @@ export const metadata = {
   title: "Spliterr - split your expenses easily",
   description: "Spliterr is a platform that allows you to split your expenses with your friends and family.",
   icons: {
-    icon: "/favicon.ico",
+    icon: {
+      url: "/favicon.ico",
+      href: "/favicon.ico",
+    },
   },
   keywords: ["spliterr", "split", "expenses", "friends", "family", "splitter", "splitter app", "splitter platform", "splitter software", "splitter app", "splitter platform", "splitter software"],
   authors: [{ name: "Spliterr", url: "https://spliterr.vercel.app" }],

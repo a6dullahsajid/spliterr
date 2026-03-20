@@ -29,6 +29,19 @@
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
+.logoText a {
+    display: flex;
+    align-items: center;
+}
+
+.logoText img {
+    position: relative;
+    left: 7px;
+    width: 50px;
+    height: 50px;
+    transform: rotateZ(5deg);
+}
+
 .menuContainer {
     display: flex;
     justify-content: center;
@@ -146,6 +159,12 @@
 
     .logoText {
         font-size: 2rem;
+    }
+
+    .logoText img {
+        width: 35px;
+        height: 35px;
+        left: 5px;
     }
 
     .menuContainer {
