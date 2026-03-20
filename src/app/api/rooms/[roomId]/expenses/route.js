@@ -1,6 +1,7 @@
 import connectDB from "@/lib/mongodb";
 import Expense from "@/models/Expense";
 import Room from "@/models/Room";
+import "@/models/User";
 import { verifyToken } from "@/lib/auth";
 
 

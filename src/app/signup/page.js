@@ -15,6 +15,9 @@ export default function SignupPage() {
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
+    const [otp, setOtp] = useState('');
+    const [isOtpSent, setIsOtpSent] = useState(false);
+    const [otpVerified, setOtpVerified] = useState(false);
 
     useEffect(() => {
         document.title = "Spliterr - Signup";
@@ -22,6 +25,12 @@ export default function SignupPage() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (!otpVerified) {
+            toast.error("Please verify OTP", {
+                position: "top-right"
+            });
+            return;
+        }
         setLoading(true);
 
         try {
@@ -43,7 +52,7 @@ export default function SignupPage() {
                 toast.error(data.message || "Signup failed", {
                     position: "top-right"
                 });
-            }else{
+            } else {
                 toast.success("Account created successfully", {
                     position: "top-right"
                 });
@@ -61,6 +70,91 @@ export default function SignupPage() {
         }
 
     }
+
+    // const handleSendOtp = async () => {
+    //     if (isOtpSent) {
+    //         if(!email) {
+    //             toast.error("Please enter email to verify OTP", {
+    //                 position: "top-right"
+    //             });
+    //             return;
+    //         }
+    //         if(!otp) {
+    //             toast.error("Please enter OTP to verify", {
+    //                 position: "top-right"
+    //             });
+    //             return;
+    //         }
+    //         setOtpVerified(await verifyOtp());
+    //         return;
+    //     }
+
+    //     if(!email) {
+    //         toast.error("Please enter email to send OTP", {
+    //             position: "top-right"
+    //         });
+    //         return;
+    //     }
+    //     const res = await fetch("/api/send-otp", {
+    //         method: "POST",
+    //         headers: {
+    //             "Content-Type": "application/json"
+    //         },
+    //         body: JSON.stringify({ email, purpose: "signup" })
+    //     });
+
+    //     const data = await res.json();
+
+    //     if (!res.ok) {
+    //         toast.error(data?.message || "Failed to send OTP", {
+    //             position: "top-right"
+    //         });
+    //         return;
+    //     }
+    //     toast.success(data.message || "OTP sent successfully", {
+    //         position: "top-right",
+    //         autoClose: 3000,
+    //         hideProgressBar: false,
+    //         closeOnClick: true,
+    //         pauseOnHover: true,
+    //         draggable: true,
+    //         progress: undefined,
+    //         theme: "dark",
+    //     });
+    //     setIsOtpSent(true);
+    // }
+
+    // const verifyOtp = async () => {
+
+    //     const res = await fetch("/api/verify-otp", {
+    //         method: "POST",
+    //         headers: {
+    //             "Content-Type": "application/json"
+    //         },
+    //         body: JSON.stringify({ email, otp, purpose: "signup" })
+    //     });
+
+    //     const data = await res.json();
+    //     if (!res.ok) {
+    //         toast.error(data.message || "Failed to verify OTP", {
+    //             position: "top-right"
+    //         });
+    //     }
+    //     toast.success(data.message || "OTP verified successfully", {
+    //         position: "top-right",
+    //         autoClose: 3000,
+    //         hideProgressBar: false,
+    //         closeOnClick: true,
+    //         pauseOnHover: true,
+    //         draggable: true,
+    //         progress: undefined,
+    //         theme: "dark",
+    //     });
+
+
+    //     return true;
+    // }
+
     return (
         <main className={styles.signupContainer}>
             <ToastContainer />
@@ -81,6 +175,13 @@ export default function SignupPage() {
                         <input type={showPassword ? "text" : "password"} value={password} onChange={(e) => setPassword(e.target.value)} required className={styles.input} />
                         <div className={styles.showPassword} onClick={() => setShowPassword(!showPassword)}>{showPassword ? "Hide" : "Show"}</div>
                     </label>
+                    {/* <label className={styles.label}>
+                        <span>OTP</span>
+                        <div className={styles.otpInputContainer}>
+                            <input className={styles.otpInput} type="text" value={otp} onChange={(e) => setOtp(e.target.value)} required />
+                            <button type="button" disabled={otpVerified} onClick={handleSendOtp} className={styles.sendOtpButton}>{isOtpSent ? "Verify OTP" : "Send OTP"}</button>
+                        </div>
+                    </label> */}
                     <button type="submit" disabled={loading} className={styles.submitButton}>
                         {loading ? "Creating account..." : "Create account"}
                     </button>

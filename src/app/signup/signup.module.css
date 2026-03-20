@@ -104,6 +104,39 @@
     color: #13a357;
 }
 
+/* .label:nth-child(5) input {
+    width: 180px;
+} */
+
+.otpInputContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 220px;
+    gap: 0.3rem;
+}
+
+.otpInputContainer input {
+    width: 155px;
+    height: 30px;
+    border-radius: 8px;
+    padding: 0.5rem 0.75rem;
+    font-size: 1rem;
+}
+
+.sendOtpButton {
+    width: 60px;
+    height: 30px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    color: #ffffff;
+    background: linear-gradient(135deg, #0adc2a, #13a357);
+    border: none;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
+}
+
 .submitButton {
     display: flex;
     justify-content: center;
@@ -184,6 +217,27 @@
         font-size: 0.8rem;
         border-radius: 4px;
         padding: 0.3rem 0.2rem;
+    }
+
+
+    .otpInputContainer {
+        width: 150px;
+        gap: 0.3rem;
+    }
+
+    .otpInputContainer input {
+        width: 95px;
+        height: 20px;
+        border-radius: 4px;
+        padding: 0.5rem 0.75rem;
+        font-size: 1rem;
+    }
+
+    .sendOtpButton {
+        width: 55px;
+        height: 20px;
+        border-radius: 4px;
+        font-size: 0.65rem;
     }
 
     .showPassword {

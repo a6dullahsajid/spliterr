@@ -1,4 +1,4 @@
-.loginContainer {
+.forgotPasswordContainer {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -7,7 +7,7 @@
     background-color: #000000;
 }
 
-.loginForm {
+.forgotPasswordForm {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -17,14 +17,15 @@
     border: 1px solid #333333;
     border-radius: 8px;
     width: 450px;
-    min-height: 400px;
+    min-height: 350px;
     padding: 2rem;
     box-shadow: 0px 0px 20px rgb(71, 71, 71);
 }
 
-.loginTitle {
+.forgotPasswordTitle {
     font-size: 2.5rem;
     font-weight: 600;
+    margin-bottom: 2rem;
     color: #429669;
     -webkit-background-clip: text;
     background-clip: text;
@@ -32,17 +33,17 @@
     background-image: linear-gradient(135deg, #0adc2a, #13a357);
 }
 
-.loginFormContent {
+.forgotPasswordFormContent {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 95%;
-    width: 80%;
+    width: 85%;
     gap: 1rem;
 }
 
-.loginSubtitle {
+.forgotPasswordSubtitle {
     font-size: 1.3rem;
     font-weight: 600;
     color: #13a357;
@@ -62,7 +63,7 @@
     align-items: center;
     width: 100%;
     gap: 0.5rem;
-    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
 .label span {
@@ -95,11 +96,40 @@
     box-shadow: 0 0px 8px rgba(19, 163, 87, 0.2);
 }
 
+.otpInputContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 200px;
+    gap: 0.5rem;
+}
+
+.otpInputContainer input {
+    width: 135px;
+    height: 30px;
+    border-radius: 8px;
+    padding: 0.5rem 0.75rem;
+    font-size: 1rem;
+}
+
+.sendOtpButton {
+    width: 65px;
+    height: 30px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    color: #ffffff;
+    background: linear-gradient(135deg, #0adc2a, #13a357);
+    border: none;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
+}
+
 .showPassword {
     text-align: center;
     cursor: pointer;
     position: absolute;
-    right: 4.8rem;
+    right: 4.2rem;
     font-size: 0.85rem;
     color: #13a357;
 }
@@ -110,7 +140,7 @@
     font-size: 0.9rem;
     color: rgb(0, 106, 255);
     text-align: right;
-    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     width: 100%;
 }
 
@@ -132,6 +162,7 @@
     background: linear-gradient(135deg, #0adc2a, #13a357);
     border: none;
     cursor: pointer;
+    margin-top: 1rem;
     transition: all 0.25s ease;
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
 }
@@ -146,7 +177,7 @@
     font-size: 1rem;
     color: #13a357;
     text-align: center;
-    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
 .signupLink a {
@@ -160,38 +191,47 @@
 }
 
 @media (max-width: 480px) {
-    .loginContainer {
+    .forgotPasswordContainer {
         height: 90vh;
     }
 
-    .loginForm {
+    .forgotPasswordForm {
         width: 75%;
         min-height: 220px;
         padding: 0.8rem 0rem;
         box-shadow: 0px 0px 14px rgb(71, 71, 71);
     }
 
-    .loginFormContent {
+    .forgotPasswordFormContent {
         width: 80%;
     }
 
-    .loginTitle {
+    .forgotPasswordTitle {
         font-size: 1.8rem;
         margin-bottom: 1rem;
     }
 
-    .loginSubtitle {
+    .forgotPasswordSubtitle {
         font-size: 0.9rem;
     }
 
+    
+    .sendOtpButton {
+        width: 55px;
+        height: 20px;
+        border-radius: 4px;
+        font-size: 0.7rem;
+    }
+    
+    
     .label {
         gap: 0.3rem;
     }
-
+    
     .label span {
         font-size: 0.8rem;
     }
-
+    
     .label input {
         width: 150px;
         height: 20px;
@@ -199,7 +239,19 @@
         border-radius: 4px;
         padding: 0.3rem 0.2rem;
     }
+    
+    .otpInputContainer {
+        width: 150px;
+        gap: 0.3rem;
+    }
 
+    .otpInputContainer input {
+        width: 95px;
+        height: 20px;
+        border-radius: 4px;
+        padding: 0rem 0.3rem;
+        font-size: 0.8rem;
+    }
     .showPassword {
         font-size: 0.7rem;
         right: 2.2rem;
@@ -216,4 +268,4 @@
         font-size: 0.8rem;
         margin-top: 0.5rem;
     }
-}   
+}

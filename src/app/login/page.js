@@ -86,6 +86,7 @@ export default function LoginPage() {
                         />
                         <div className={styles.showPassword} onClick={() => setShowPassword(!showPassword)}>{showPassword ? "Hide" : "Show"}</div>
                     </label>
+                    <p className={styles.forgotPasswordLink}><Link href="/forgot-password">Forgot Password?</Link></p>
 
                     <button
                         type="submit"

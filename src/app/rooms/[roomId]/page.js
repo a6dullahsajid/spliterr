@@ -9,10 +9,12 @@ import { FaCopy, FaEdit, FaLink, FaTrash, FaChevronDown, FaChevronUp } from 'rea
 import AddExpense from '@/app/components/add-expense';
 import DeleteOverlay from '@/app/components/DeleteOverlay';
 import EditExpense from '@/app/components/edit-expense';
-import SettleOverlay from '@/app/components/SettleOverlay';
+// import SettleOverlay from '@/app/components/SettleOverlay';
+import { useRouter } from 'next/navigation';
 
 export default function RoomPage() {
     const { roomId } = useParams();
+    const router = useRouter();
     const [user, setUser] = useState(null);
     const [refreshKey, setRefreshKey] = useState(0);
     const [expenses, setExpenses] = useState(null);
@@ -32,26 +34,24 @@ export default function RoomPage() {
     const [expenseToEdit, setExpenseToEdit] = useState(null);
     const [deleting, setDeleting] = useState(false);
     const [showDetailedReport, setShowDetailedReport] = useState(false);
-    const [showSettleModal, setShowSettleModal] = useState(false);
-    const [expenseToSettle, setExpenseToSettle] = useState(null);
-    const [settling, setSettling] = useState(false);
+    const [showAllCards, setShowAllCards] = useState(false);
+    // const [showSettleModal, setShowSettleModal] = useState(false);
+    // const [expenseToSettle, setExpenseToSettle] = useState(null);
     const formatExpenseTimestamp = (isoDate) => {
         const d = new Date(isoDate);
         if (Number.isNaN(d.getTime())) return "";
 
         const dd = String(d.getDate()).padStart(2, "0");
         const month = d.toLocaleString("en-US", { month: "long" });
-        const yyyy = d.getFullYear();
+        const yyyy = d.getFullYear().toString().slice(-2);
         const time = d
             .toLocaleString("en-US", {
                 hour: "2-digit",
                 minute: "2-digit",
                 hour12: true,
             })
-            .replace(" AM", " A.M.")
-            .replace(" PM", " P.M.");
 
-        return `${dd}/${month}/${yyyy}, ${time}`;
+        return `${dd} ${month} ${yyyy}, ${time}`;
     };
     useEffect(() => {
         if (typeof window === "undefined") return;
@@ -74,6 +74,7 @@ export default function RoomPage() {
         if (!token) {
             toast.error("Please login first");
             setLoading(false);
+            router.push("/login");
             return;
         }
 
@@ -224,7 +225,7 @@ export default function RoomPage() {
                 onConfirm={deleteExpense}
                 onCancel={() => !deleting && setExpenseToDelete(null)}
             />
-            <SettleOverlay
+            {/* <SettleOverlay
                 open={showSettleModal}
                 expense={expenseToSettle}
                 onCancel={() => setShowSettleModal(false)}
@@ -234,7 +235,7 @@ export default function RoomPage() {
                     setExpenseToSettle(null);
                     setRefreshKey((k) => k + 1);
                 }}
-            />
+            /> */}
             {showAddExpenseModal && (
                 <AddExpense
                     show={showAddExpenseModal}
@@ -301,20 +302,6 @@ export default function RoomPage() {
                             <p>Total Expense</p>
                             <h3>₹{summary.totalRoomExpense}</h3>
                         </div>
-
-                        <div className={styles.card}>
-                            <p>Total Expenses</p>
-                            <h3>{expenses?.length}</h3>
-                        </div>
-
-                        <div className={styles.card}>
-                            <p>Members</p>
-                            <h3>{room?.members?.length}</h3>
-                        </div>
-                    </section>
-
-                    {/* YOUR BALANCES */}
-                    <section className={styles.yourBalances}>
                         <div className={styles.card}>
                             <p>{summary.netBalance >= 0 ? "You get" : "You pay"}</p>
                             <h3 style={{ color: summary.netBalance >= 0 ? '#0adc2a' : '#ff0000' }}>₹{(summary.netBalance >= 0 ? Math.round(summary.youGet) : Math.round(summary.youPay))}</h3>
@@ -323,57 +310,73 @@ export default function RoomPage() {
                             <p>You paid</p>
                             <h3>₹{Math.round(summary.youPaid)}</h3>
                         </div>
-
-                        <div className={styles.card}>
-                            <p>Your share</p>
-                            <h3>₹{Math.round(summary.youOwe)}</h3>
-                        </div>
-
+                        {!showAllCards && <button className={styles.detailedSummaryButton} onClick={() => setShowAllCards(true)}>Show detailed summary <FaChevronDown /></button>}
                     </section>
 
-                    {/* MEMBERS + DEBTS */}
-                    <section className={styles.middleSection}>
-
-                        {/* MEMBERS */}
-                        <div className={styles.membersBox}>
-                            <h3>Members</h3>
-                            {room?.members?.map((m) => (
-                                <div key={m._id} className={styles.member}>
-                                    {m.name}
+                    {/* YOUR BALANCES */}
+                    {showAllCards && (
+                        <>
+                            <section className={styles.yourBalances}>
+                                <div className={styles.card}>
+                                    <p>Total Expenses</p>
+                                    <h3>{expenses?.length}</h3>
                                 </div>
-                            ))}
-                        </div>
 
-                        {/* DEBTS */}
-                        <div className={styles.debtBox}>
-                            {showDetailedReport && (
-                                <>
-                                    <h3>Detailed Report</h3>
-                                    {balances?.length === 0 && <p>No debts 🎉</p>}
-                                    {balances?.map((d, i) => (
-                                        <p key={i}>
-                                            {d.from.name} <b>should pay</b> {d.to.name} <b>₹{Math.round(d.amount)}</b>
-                                        </p>
+                                <div className={styles.card}>
+                                    <p>Members</p>
+                                    <h3>{room?.members?.length}</h3>
+                                </div>
+                                <div className={styles.card}>
+                                    <p>Your share</p>
+                                    <h3>₹{Math.round(summary.youOwe)}</h3>
+                                </div>
+                            </section>
+
+                            {/* MEMBERS + DEBTS */}
+                            <section className={styles.middleSection}>
+
+                                {/* MEMBERS */}
+                                <div className={styles.membersBox}>
+                                    <h3>Members</h3>
+                                    {room?.members?.map((m) => (
+                                        <div key={m._id} className={styles.member}>
+                                            {m.name}
+                                        </div>
                                     ))}
-                                    <button onClick={() => setShowDetailedReport(false)}>Get simplified report <FaChevronUp /></button>
-                                </>
-                            )}
-                            {!showDetailedReport && (
-                                <>
-                                    <h3>Settle up</h3>
-                                    {simplifiedDebts?.length === 0 && <p>No debts 🎉</p>}
+                                </div>
 
-                                    {simplifiedDebts?.map((d, i) => (
-                                        <p key={i}>
-                                            {d.from} <b>should pay</b> {d.to} <b>₹{Math.round(d.amount)}</b>
-                                        </p>
-                                    ))}
-                                    <button onClick={() => setShowDetailedReport(true)}>Get detailed report <FaChevronDown /></button>
-                                </>
-                            )}
-                        </div>
+                                {/* DEBTS */}
+                                <div className={styles.debtBox}>
+                                    {showDetailedReport && (
+                                        <>
+                                            <h3>Detailed Report</h3>
+                                            {balances?.length === 0 && <p>No debts 🎉</p>}
+                                            {balances?.map((d, i) => (
+                                                <p key={i}>
+                                                    {d.from.name} <b>should pay</b> {d.to.name} <b>₹{Math.round(d.amount)}</b>
+                                                </p>
+                                            ))}
+                                            <button onClick={() => setShowDetailedReport(false)}>Get simplified report <FaChevronUp /></button>
+                                        </>
+                                    )}
+                                    {!showDetailedReport && (
+                                        <>
+                                            <h3>Settle up</h3>
+                                            {simplifiedDebts?.length === 0 && <p>No debts 🎉</p>}
 
-                    </section>
+                                            {simplifiedDebts?.map((d, i) => (
+                                                <p key={i}>
+                                                    {d.from} <b>should pay</b> {d.to} <b>₹{Math.round(d.amount)}</b>
+                                                </p>
+                                            ))}
+                                            <button onClick={() => setShowDetailedReport(true)}>Get detailed report <FaChevronDown /></button>
+                                        </>
+                                    )}
+                                </div>
+                                <button className={styles.detailedSummaryButton} onClick={() => setShowAllCards(false)}>Hide detailed summary <FaChevronUp /></button>
+                            </section>
+                        </>
+                    )}
 
                     {/* EXPENSE TABLE */}
                     <section className={styles.tableSection}>
@@ -387,7 +390,7 @@ export default function RoomPage() {
                                     <th>Participants</th>
                                     <th>Timestamp</th>
                                     <th>Amount</th>
-                                    <th>Status</th>
+                                    {/* <th>Status</th> */}
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -400,7 +403,7 @@ export default function RoomPage() {
                                         <td>{expense.participants.map(p => p.name).join(", ")}</td>
                                         <td>{formatExpenseTimestamp(expense.createdAt)}</td>
                                         <td>₹{expense.amount}</td>
-                                        <td>
+                                        {/* <td>
                                             <button onClick={() => {
                                                 const userId = user?.id ?? user?._id;
                                                 const paidById = expense?.paidBy?._id ?? expense?.paidBy?.id;
@@ -417,7 +420,7 @@ export default function RoomPage() {
                                             }} className={expense.settled ? styles.settled : styles.pending}>
                                                 {expense.settled ? "Settled" : "Pending"}
                                             </button>
-                                        </td>
+                                        </td> */}
                                         <td>
                                             <div className={styles.actionButtons}>
                                                 {(() => {

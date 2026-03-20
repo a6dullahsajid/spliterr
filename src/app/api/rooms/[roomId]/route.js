@@ -1,5 +1,6 @@
 import connectDB from "@/lib/mongodb";
 import Room from "@/models/Room";
+import "@/models/User";
 import { verifyToken } from "@/lib/auth";
 
 export async function GET(req, context) {

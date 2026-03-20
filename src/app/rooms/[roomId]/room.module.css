@@ -25,7 +25,7 @@
 .header h1 {
     font-size: 2.5rem;
     letter-spacing: 0.05rem;
-    font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
 }
 
 .header p {
@@ -83,7 +83,7 @@
     margin-bottom: 24px;
 }
 
-.card p{
+.card p {
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     letter-spacing: 0.05rem;
     font-weight: 600;
@@ -96,7 +96,12 @@
     font-weight: 600;
     font-size: 1.2rem;
 }
-.yourBalances .card:nth-child(2) h3 {
+
+.summaryCards .card:nth-child(2) h3 {
+    font-weight: 600;
+}
+
+.summaryCards .card:nth-child(3) h3 {
     font-weight: 600;
     color: #ff0000;
 }
@@ -107,6 +112,25 @@
     border-radius: 12px;
     background: #111;
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.05);
+}
+
+.detailedSummaryButton {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    font-size: 1.05rem;
+    font-weight: 500;
+    color: #d7e1fe;
+    grid-column: span 3;
+}
+
+.detailedSummaryButton svg {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #d7e1fe;
 }
 
 /* MIDDLE */
@@ -128,7 +152,8 @@
     justify-content: space-between;
     transition: all 0.4s ease;
 }
-.membersBox{
+
+.membersBox {
     justify-content: flex-start;
 }
 
@@ -164,6 +189,7 @@
     padding: 16px;
     border-radius: 12px;
 }
+
 .tableSection h3 {
     font-size: 1.5rem;
     color: #ffffff;
@@ -175,6 +201,7 @@
     text-decoration-thickness: 1px;
     text-decoration-style: solid;
 }
+
 .expensesContainer {
     width: 100%;
     border-collapse: collapse;
@@ -201,6 +228,10 @@
     font-weight: 600;
     font-size: 1.05rem;
     color: #c5d4ff;
+}
+
+.expensesContainer td:nth-child(4) {
+    font-size: 0.9rem;
 }
 
 .expensesContainer td:nth-child(5) {
@@ -248,10 +279,11 @@
     .roomPageContent {
         padding: 15px;
     }
+
     .header h1 {
         font-size: 1.8rem;
     }
-    
+
     .header p {
         font-size: 0.8rem;
         gap: 0.2rem;
@@ -260,9 +292,11 @@
     .header p svg {
         font-size: 0.7rem;
     }
+
     .headerActions {
         gap: 0.2rem;
     }
+
     .headerActions button {
         font-size: 0.7rem;
         padding: 0.3rem 0.5rem;
@@ -273,13 +307,14 @@
     .headerActions button svg {
         font-size: 0.7rem;
     }
-    
+
 
     .summaryCards,
     .yourBalances {
         gap: 5px;
         margin-bottom: 5px;
     }
+
     .card {
         /* display: flex;
         flex-direction: column;
@@ -290,43 +325,58 @@
         border: 1px solid rgba(255, 255, 255, 0.05);
         box-shadow: 0 0 0px rgba(255, 255, 255, 0.05);
     }
-    .card p{
+
+    .detailedSummaryButton {
+        gap: 0.3rem;
+        font-size: 0.85rem;
+    }
+    
+    .detailedSummaryButton svg {
+        font-size: 0.65rem;
+    }
+
+    .card p {
         font-size: 0.8rem;
+    }
+
+    .card h3 {
+        font-size: 0.9rem;
     }
 
     .card:nth-child(1) h3 {
-        font-size: 0.8rem;
-    }
-    
-    .yourBalances .card:nth-child(2) h3 {
-        font-size: 0.8rem;
+        font-size: 0.9rem;
     }
 
-    .middleSection{
+    .yourBalances .card:nth-child(2) h3 {
+        font-size: 0.9rem;
+    }
+
+    .middleSection {
         gap: 5px;
         margin-bottom: 5px;
     }
 
-    .membersBox,.debtBox{
+    .membersBox,
+    .debtBox {
         padding: 12px;
         border-radius: 8px;
         border: 1px solid rgba(255, 255, 255, 0.05);
         box-shadow: 0 0 0px rgba(255, 255, 255, 0.05);
     }
-    
+
     .membersBox h3,
     .debtBox h3 {
         font-size: 0.8rem;
     }
 
-    .debtBox p{
+    .debtBox p {
         font-size: 0.65rem;
     }
 
-    .debtBox button{
+    .debtBox button {
         font-size: 0.8rem;
     }
-    
+
     .member {
         font-size: 0.8rem;
     }
@@ -339,7 +389,7 @@
         border: 1px solid rgba(255, 255, 255, 0.05);
         box-shadow: 0 0 0px rgba(255, 255, 255, 0.05);
     }
-    
+
     .tableSection h3 {
         font-size: 1.3rem;
         margin-bottom: 4px;
@@ -351,15 +401,12 @@
         padding: 8px 15px;
         border-bottom: 1px solid rgba(255, 255, 255, 0.09);
     }
-    
+
     .expensesContainer td:nth-child(1) {
         font-size: 0.8rem;
     }
-    .settled {
-        font-size: 0.8rem;
+
+    .expensesContainer td:nth-child(4) {
+        font-size: 0.7rem;
     }
-    
-    .pending {
-        font-size: 0.8rem;
-    }
-}       
+}
