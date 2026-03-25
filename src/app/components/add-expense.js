@@ -6,6 +6,7 @@ import styles from "./add-expense.module.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useParams } from "next/navigation";
+import { TOAST_OPTIONS } from "@/lib/toastOptions";
 
 export default function AddExpense({ show, onClose, room, onAdded }) {
     const [description, setDescription] = useState("");
@@ -45,17 +46,17 @@ export default function AddExpense({ show, onClose, room, onAdded }) {
         e.preventDefault();
         setLoading(true);
         if (!description) {
-            toast.error("Description is required.");
+            toast.error("Description is required.", TOAST_OPTIONS);
             setLoading(false);
             return;
         }
         if (amount <= 0) {
-            toast.error("Amount must be greater than 0.");
+            toast.error("Amount must be greater than 0.", TOAST_OPTIONS);
             setLoading(false);
             return;
         }
         if (participants.length === 0) {
-            toast.error("Please select at least one participant.");
+            toast.error("Please select at least one participant.", TOAST_OPTIONS);
             setLoading(false);
             return;
         }
@@ -66,7 +67,7 @@ export default function AddExpense({ show, onClose, room, onAdded }) {
                     ? localStorage.getItem("token")
                     : null;
             if (!token) {
-                toast.error("Please login again.");
+                toast.error("Please login again.", TOAST_OPTIONS);
                 setLoading(false);
                 return;
             }
@@ -86,12 +87,12 @@ export default function AddExpense({ show, onClose, room, onAdded }) {
 
             const data = await res.json();
             if (!res.ok) {
-                toast.error(data.message);
+                toast.error(data.message, TOAST_OPTIONS);
                 setLoading(false);
                 return;
             }
 
-            toast.success(data.message);
+            toast.success(data.message, TOAST_OPTIONS);
             setLoading(false);
             setDescription("");
             setAmount(0);
@@ -100,7 +101,7 @@ export default function AddExpense({ show, onClose, room, onAdded }) {
             onClose?.();
         } catch (error) {
             console.error(error);
-            toast.error(error.message);
+            toast.error(error.message, TOAST_OPTIONS);
             setLoading(false);
         }
     };

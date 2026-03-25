@@ -6,6 +6,7 @@ import styles from "./login.module.css";
 import Link from "next/link";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { TOAST_OPTIONS } from "@/lib/toastOptions";
 
 export default function LoginPage() {
     const router = useRouter();
@@ -33,9 +34,7 @@ export default function LoginPage() {
             console.log(data);
 
             if (!res.ok) {
-                toast.error(data.message || "Login failed", {
-                    position: "top-right",
-                });
+                toast.error(data.message || "Login failed", TOAST_OPTIONS);
                 setLoading(false);
                 return;
             }
@@ -46,12 +45,10 @@ export default function LoginPage() {
 
             setLoading(false);
 
-            toast.success("Login successful!", { position: "top-right" });
+            toast.success("Login successful!", TOAST_OPTIONS);
             router.push("/rooms");
         } catch (err) {
-            toast.error("Something went wrong. Please try again.", {
-                position: "top-right",
-            });
+            toast.error("Something went wrong. Please try again.", TOAST_OPTIONS);
             setLoading(false);
         }
     };

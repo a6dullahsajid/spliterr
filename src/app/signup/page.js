@@ -6,6 +6,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import styles from './signup.module.css'
 import Link from 'next/link'
+import { TOAST_OPTIONS } from "@/lib/toastOptions";
 
 export default function SignupPage() {
 
@@ -26,9 +27,7 @@ export default function SignupPage() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!otpVerified) {
-            toast.error("Please verify OTP", {
-                position: "top-right"
-            });
+            toast.error("Please verify OTP", TOAST_OPTIONS);
             return;
         }
         setLoading(true);
@@ -49,26 +48,19 @@ export default function SignupPage() {
             const data = await res.json();
 
             if (!res.ok) {
-                toast.error(data.message || "Signup failed", {
-                    position: "top-right"
-                });
+                toast.error(data.message || "Signup failed", TOAST_OPTIONS);
             } else {
-                toast.success("Account created successfully", {
-                    position: "top-right"
-                });
+                toast.success("Account created successfully", TOAST_OPTIONS);
                 setTimeout(() => {
                     router.push("/login");
                 }, 800);
             }
         } catch (error) {
-            toast.error("Something went wrong. Please try again.", {
-                position: "top-right"
-            });
+            toast.error("Something went wrong. Please try again.", TOAST_OPTIONS);
             setLoading(false);
         } finally {
             setLoading(false);
         }
-
     }
 
     // const handleSendOtp = async () => {

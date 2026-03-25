@@ -1,8 +1,11 @@
+"use client";
+
 import React, { useState } from 'react'
 import styles from './create-room-modal.module.css'
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from 'next/navigation';
+import { TOAST_OPTIONS } from "@/lib/toastOptions";
 
 export default function CreateGroupModal({ show, onClose }) {
     const [name, setName] = useState('');
@@ -13,11 +16,7 @@ export default function CreateGroupModal({ show, onClose }) {
         e.preventDefault();
         setLoading(true);
         if (!name) {
-            toast.error('Group name is required',
-                {
-                    position: 'top-right',
-                }
-            );
+            toast.error('Group name is required', TOAST_OPTIONS);
             setLoading(false);
             return;
         }
@@ -32,16 +31,16 @@ export default function CreateGroupModal({ show, onClose }) {
             });
             const data = await res.json();
             if (!res.ok) {
-                toast.error(data.message);
+                toast.error(data.message, TOAST_OPTIONS);
                 setLoading(false);
                 return;
             }
-            toast.success(data.message);
+            toast.success(data.message, TOAST_OPTIONS);
             setLoading(false);
             onClose();
         } catch (error) {
             console.error(error);
-            toast.error(error.message);
+            toast.error(error.message, TOAST_OPTIONS);
             setLoading(false);
         }
     }

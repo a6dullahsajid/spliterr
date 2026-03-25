@@ -7,6 +7,7 @@ import styles from "./home.module.css";
 import CreateGroupModal from "./components/create-room-modal.js";
 import { toast, ToastContainer } from "react-toastify";
 import JoinRoomModal from "./components/join-room-modal";
+import { TOAST_OPTIONS } from "@/lib/toastOptions";
 
 export default function HomePage() {
   useEffect(() => {
@@ -29,15 +30,7 @@ export default function HomePage() {
     if (loggedIn) {
       setShowCreateGroupModal(true);
     } else {
-      toast.error("Please login to create a group", {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        theme: "dark",
-      });
+      toast.error("Please login to create a group", TOAST_OPTIONS);
       setTimeout(() => {
         router.push("/login");
       }, 1000);
@@ -48,15 +41,7 @@ export default function HomePage() {
     if (loggedIn) {
       setShowJoinRoomModal(true);
     } else {
-      toast.error("Please login to join a group", {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        theme: "dark",
-      });
+      toast.error("Please login to join a group", TOAST_OPTIONS);
       setTimeout(() => {
         router.push("/login");
       }, 500);

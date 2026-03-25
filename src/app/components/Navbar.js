@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import Image from 'next/image';
+import { TOAST_OPTIONS } from "@/lib/toastOptions";
 
 export default function Navbar() {
     const router = useRouter();
@@ -55,15 +56,7 @@ export default function Navbar() {
         }
         setAuth({ loggedIn: false, user: null });
         router.push('/');
-        toast.success("Logged out successfully", {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            theme: "dark",
-        });
+        toast.success("Logged out successfully", TOAST_OPTIONS);
     }
 
     return (

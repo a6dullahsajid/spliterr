@@ -4,6 +4,7 @@ import React from "react";
 import styles from "./delete-overlay.module.css";
 import { toast } from "react-toastify";
 import { useParams } from "next/navigation";
+import { TOAST_OPTIONS } from "@/lib/toastOptions";
 
 export default function SettleOverlay({
     open,
@@ -25,23 +26,14 @@ export default function SettleOverlay({
             });
             const data = await res.json();
             if (!res.ok) {
-                toast.error(data.message);
+                toast.error(data.message, TOAST_OPTIONS);
                 return;
             }
-            toast.success(data.message, {
-                position: "top-right",
-                autoClose: 3000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                theme: "dark",
-                draggable: true,
-                progress: undefined,
-            });
+            toast.success(data.message, TOAST_OPTIONS);
             onConfirm();
         } catch (error) {
             console.error(error);
-            toast.error("Failed to settle expense");
+            toast.error("Failed to settle expense", TOAST_OPTIONS);
         }
     }
 

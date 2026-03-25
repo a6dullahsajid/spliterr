@@ -3,6 +3,7 @@ import styles from "./add-expense.module.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useParams } from "next/navigation";
+import { TOAST_OPTIONS } from "@/lib/toastOptions";
 
 export default function EditExpense({ show, onClose, onUpdated, expense }) {
     const [description, setDescription] = useState(expense?.description ?? "");
@@ -22,12 +23,12 @@ export default function EditExpense({ show, onClose, onUpdated, expense }) {
         e.preventDefault();
         setLoading(true);
         if (!description) {
-            toast.error("Description is required.");
+            toast.error("Description is required.", TOAST_OPTIONS);
             setLoading(false);
             return;
         }
         if (amount <= 0) {
-            toast.error("Amount must be greater than 0.");
+            toast.error("Amount must be greater than 0.", TOAST_OPTIONS);
             setLoading(false);
             return;
         }
@@ -38,13 +39,13 @@ export default function EditExpense({ show, onClose, onUpdated, expense }) {
                     ? localStorage.getItem("token")
                     : null;
             if (!token) {
-                toast.error("Please login again.");
+                toast.error("Please login again.", TOAST_OPTIONS);
                 setLoading(false);
                 return;
             }
 
             if (!roomId || !expenseId) {
-                toast.error("Invalid expense or room. Please try again.");
+                toast.error("Invalid expense or room. Please try again.", TOAST_OPTIONS);
                 setLoading(false);
                 return;
             }
@@ -63,12 +64,12 @@ export default function EditExpense({ show, onClose, onUpdated, expense }) {
 
             const data = await res.json();
             if (!res.ok) {
-                toast.error(data.message);
+                toast.error(data.message, TOAST_OPTIONS);
                 setLoading(false);
                 return;
             }
 
-            toast.success(data.message);
+            toast.success(data.message, TOAST_OPTIONS);
             setLoading(false);
             setDescription("");
             setAmount(0);
@@ -76,7 +77,7 @@ export default function EditExpense({ show, onClose, onUpdated, expense }) {
             onClose?.();
         } catch (error) {
             console.error(error);
-            toast.error(error.message);
+            toast.error(error.message, TOAST_OPTIONS);
             setLoading(false);
         }
     };

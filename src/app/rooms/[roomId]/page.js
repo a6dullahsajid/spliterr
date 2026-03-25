@@ -11,6 +11,7 @@ import DeleteOverlay from '@/app/components/DeleteOverlay';
 import EditExpense from '@/app/components/edit-expense';
 // import SettleOverlay from '@/app/components/SettleOverlay';
 import { useRouter } from 'next/navigation';
+import { TOAST_OPTIONS } from "@/lib/toastOptions";
 
 export default function RoomPage() {
     const { roomId } = useParams();
@@ -72,7 +73,7 @@ export default function RoomPage() {
         setUser(parsedUser);
 
         if (!token) {
-            toast.error("Please login first");
+            toast.error("Please login first", TOAST_OPTIONS);
             setLoading(false);
             router.push("/login");
             return;
@@ -86,7 +87,7 @@ export default function RoomPage() {
             });
             const data = await res.json();
             if (!res.ok) {
-                toast.error(data.message);
+                toast.error(data.message, TOAST_OPTIONS);
                 return;
             }
             console.log("expenses", data);
@@ -101,7 +102,7 @@ export default function RoomPage() {
             });
             const data = await res.json();
             if (!res.ok) {
-                toast.error(data.message);
+                toast.error(data.message, TOAST_OPTIONS);
                 return;
             }
             setBalances(data.balances);
@@ -114,7 +115,7 @@ export default function RoomPage() {
             });
             const data = await res.json();
             if (!res.ok) {
-                toast.error(data.message);
+                toast.error(data.message, TOAST_OPTIONS);
                 return;
             }
             setSummary(data);
@@ -127,7 +128,7 @@ export default function RoomPage() {
             });
             const data = await res.json();
             if (!res.ok) {
-                toast.error(data.message);
+                toast.error(data.message, TOAST_OPTIONS);
                 return;
             }
             setSimplifiedDebts(data.simplifiedDebts);
@@ -140,7 +141,7 @@ export default function RoomPage() {
             });
             const data = await res.json();
             if (!res.ok) {
-                toast.error(data.message);
+                toast.error(data.message, TOAST_OPTIONS);
                 return;
             }
             setRoom(data.room);
@@ -172,7 +173,7 @@ export default function RoomPage() {
                     : null;
 
             if (!token) {
-                toast.error('Please login again.');
+                toast.error('Please login again.', TOAST_OPTIONS);
                 setDeleting(false);
                 return;
             }
@@ -185,25 +186,17 @@ export default function RoomPage() {
             });
             const data = await res.json();
             if (!res.ok) {
-                toast.error(data.message);
+                toast.error(data.message, TOAST_OPTIONS);
                 setDeleting(false);
                 return;
             }
-            toast.success('Expense deleted successfully', {
-                position: "top-right",
-                autoClose: 3000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                theme: "dark",
-            });
+            toast.success('Expense deleted successfully', TOAST_OPTIONS);
             setExpenseToDelete(null);
             setDeleting(false);
             setRefreshKey((k) => k + 1);
         } catch (error) {
             console.error(error);
-            toast.error('Failed to delete expense');
+            toast.error('Failed to delete expense', TOAST_OPTIONS);
             setDeleting(false);
         }
     }
@@ -267,15 +260,7 @@ export default function RoomPage() {
                             <h1>{room?.name}</h1>
                             <p>Invite Code: {room?.inviteCode} <span onClick={() => {
                                 navigator.clipboard.writeText(room?.inviteCode);
-                                toast.success('Invite code copied to clipboard', {
-                                    position: "top-right",
-                                    autoClose: 3000,
-                                    hideProgressBar: false,
-                                    closeOnClick: true,
-                                    pauseOnHover: true,
-                                    draggable: true,
-                                    theme: "dark",
-                                });
+                                toast.success('Invite code copied to clipboard', TOAST_OPTIONS);
                             }}><FaCopy /></span></p>
                         </div>
 
@@ -283,15 +268,7 @@ export default function RoomPage() {
                             <button onClick={() => setShowAddExpenseModal(true)}>Add Expense</button>
                             <button onClick={() => {
                                 navigator.clipboard.writeText(`${window.location.origin}/rooms/join?inviteCode=${room?.inviteCode}`);
-                                toast.success('Invite link copied to clipboard', {
-                                    position: "top-right",
-                                    autoClose: 3000,
-                                    hideProgressBar: false,
-                                    closeOnClick: true,
-                                    pauseOnHover: true,
-                                    draggable: true,
-                                    theme: "dark",
-                                });
+                                toast.success('Invite link copied to clipboard', TOAST_OPTIONS);
                             }}>Invite <FaLink /></button>
                         </div>
                     </section>
@@ -415,7 +392,7 @@ export default function RoomPage() {
                                                 if (canSettle) {
                                                     toggleSettle(expense);
                                                 } else {
-                                                    toast.error("Only leader or creator can settle this expense");
+                                                    toast.error("Only leader or creator can settle this expense", TOAST_OPTIONS);
                                                 }
                                             }} className={expense.settled ? styles.settled : styles.pending}>
                                                 {expense.settled ? "Settled" : "Pending"}

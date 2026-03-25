@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import 'react-toastify/dist/ReactToastify.css';
 import styles from './join-room-modal.module.css';
 import { useSearchParams } from 'next/navigation';
+import { TOAST_OPTIONS } from "@/lib/toastOptions";
 
 export default function JoinRoomModal({ show, onClose }) {
     const searchParams = useSearchParams();
@@ -26,15 +27,15 @@ export default function JoinRoomModal({ show, onClose }) {
             const data = await res.json();
             console.log(data);
             if (!res.ok) {
-                toast.error(data.message);
+                toast.error(data.message, TOAST_OPTIONS);
                 return;
             }
-            toast.success(data.message);
+            toast.success(data.message, TOAST_OPTIONS);
             router.push(`/rooms/${data.room._id}`);
             onClose();
         } catch (error) {
             console.error(error);
-            toast.error(error.message);
+            toast.error(error.message, TOAST_OPTIONS);
         }
     }
 

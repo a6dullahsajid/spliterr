@@ -8,6 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import CreateGroupModal from '../components/create-room-modal';
 import JoinRoomModal from '../components/join-room-modal';
 import LoadingOverlay from '../components/LoadingOverlay';
+import { TOAST_OPTIONS } from "@/lib/toastOptions";
 
 export default function RoomsPage() {
     const router = useRouter();
@@ -23,7 +24,7 @@ export default function RoomsPage() {
         const token = localStorage.getItem("token");
 
         if (!token) {
-            toast.error("Please login first");
+            toast.error("Please login first", TOAST_OPTIONS);
             router.push("/login");
         }
 
@@ -35,7 +36,7 @@ export default function RoomsPage() {
             });
             const data = await res.json();
             if (!res.ok) {
-                toast.error(data.message);
+                toast.error(data.message, TOAST_OPTIONS);
                 return;
             }
             console.log(data.rooms);

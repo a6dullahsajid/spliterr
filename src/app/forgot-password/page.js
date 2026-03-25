@@ -6,6 +6,7 @@ import styles from "./forgotpass.module.css";
 import Link from "next/link";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { TOAST_OPTIONS } from "@/lib/toastOptions";
 
 export default function ForgotPasswordPage() {
     const router = useRouter();
@@ -23,26 +24,12 @@ export default function ForgotPasswordPage() {
 
     const handleSendOtp = async () => {
         if (!email) {
-            toast.error("Please enter email to send OTP", {
-                position: "top-right",
-                theme: "dark",
-                autoClose: 3000,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-            });
+            toast.error("Please enter email to send OTP", TOAST_OPTIONS);
             return;
         }
         if (isOtpSent) {
             if (!otp) {
-                toast.error("Please enter OTP to verify", {
-                    position: "top-right",
-                    theme: "dark",
-                    autoClose: 3000,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                });
+                toast.error("Please enter OTP to verify", TOAST_OPTIONS);
                 return;
             }
             setOtpVerified(await verifyOtp());
@@ -59,24 +46,10 @@ export default function ForgotPasswordPage() {
         });
         const data = await res.json();
         if (!res.ok) {
-            toast.error(data.message || "Failed to send OTP", {
-                position: "top-right",
-                theme: "dark",
-                autoClose: 2500,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-            });
+            toast.error(data.message || "Failed to send OTP", TOAST_OPTIONS);
             return;
         }
-        toast.success(data.message || "OTP sent successfully", {
-            position: "top-right",
-            theme: "dark",
-            autoClose: 2500,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-        });
+        toast.success(data.message || "OTP sent successfully", TOAST_OPTIONS);
         setLoading(false);
         setIsOtpSent(true);
     }
@@ -92,25 +65,11 @@ export default function ForgotPasswordPage() {
         });
         const data = await res.json();
         if (!res.ok) {
-            toast.error(data.message || "Failed to verify OTP", {
-                position: "top-right",
-                theme: "dark",
-                autoClose: 2500,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-            });
+            toast.error(data.message || "Failed to verify OTP", TOAST_OPTIONS);
             return;
         }
         setLoading(false);
-        toast.success("OTP verified successfully", {
-            position: "top-right",
-            theme: "dark",
-            autoClose: 2500,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-        });
+        toast.success("OTP verified successfully", TOAST_OPTIONS);
         return true;
     }
 
@@ -119,37 +78,16 @@ export default function ForgotPasswordPage() {
         setLoading(true);
 
         if (!otpVerified) {
-            toast.error("Please verify OTP to reset password", {
-                position: "top-right",
-                theme: "dark",
-                autoClose: 2500,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-            });
+            toast.error("Please verify OTP to reset password", TOAST_OPTIONS);
             return;
         }
         if (!password) {
-            toast.error("Please enter new password to reset password", {
-                position: "top-right",
-                theme: "dark",
-                autoClose: 2500,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-            });
+            toast.error("Please enter new password to reset password", TOAST_OPTIONS);
             return;
         }
 
         if (!email) {
-            toast.error("Please enter email to reset password", {
-                position: "top-right",
-                theme: "dark",
-                autoClose: 2500,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-            });
+            toast.error("Please enter email to reset password", TOAST_OPTIONS);
             return;
         }
         const res = await fetch("/api/reset-password", {
@@ -162,24 +100,10 @@ export default function ForgotPasswordPage() {
         const data = await res.json();
         console.log(data);
         if (!res.ok) {
-            toast.error(data.message || "Failed to reset password", {
-                position: "top-right",
-                theme: "dark",
-                autoClose: 2500,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-            });
+            toast.error(data.message || "Failed to reset password", TOAST_OPTIONS);
             return;
         }
-        toast.success(data.message || "Password reset successfully", {
-            position: "top-right",
-            theme: "dark",
-            autoClose: 2500,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-        });
+        toast.success(data.message || "Password reset successfully", TOAST_OPTIONS);
         setTimeout(() => {
             router.push("/login");
         }, 800);
