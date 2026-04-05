@@ -25,6 +25,7 @@ export async function POST(req) {
     if (isMember) {
       return Response.json({
         message: "Already a member",
+        status: 400,
         room
       });
     }

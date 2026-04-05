@@ -10,7 +10,7 @@ import { TOAST_OPTIONS } from "@/lib/toastOptions";
 
 export default function AddExpense({ show, onClose, room, onAdded }) {
     const [description, setDescription] = useState("");
-    const [amount, setAmount] = useState(0);
+    const [amount, setAmount] = useState();
     const [participants, setParticipants] = useState([]);
     const [loading, setLoading] = useState(false);
     const { roomId } = useParams();
@@ -121,6 +121,8 @@ export default function AddExpense({ show, onClose, room, onAdded }) {
                             type="text"
                             value={description}
                             onChange={(e) => setDescription(e.target.value)}
+                            placeholder="E.g. Dinner with friends"
+                            required
                         />
                     </label>
                     <label>
@@ -129,6 +131,8 @@ export default function AddExpense({ show, onClose, room, onAdded }) {
                             type="number"
                             value={amount}
                             onChange={(e) => setAmount(e.target.value)}
+                            placeholder="Enter amount"
+                            required
                         />
                     </label>
 

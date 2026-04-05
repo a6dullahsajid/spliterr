@@ -88,6 +88,9 @@ export default function RoomPage() {
             const data = await res.json();
             if (!res.ok) {
                 toast.error(data.message, TOAST_OPTIONS);
+                if (res.status === 403) {
+                    router.push("/rooms");
+                }
                 return;
             }
             console.log("expenses", data);
@@ -211,7 +214,7 @@ export default function RoomPage() {
             <DeleteOverlay
                 open={!!expenseToDelete}
                 title="Delete expense"
-                description={expenseToDelete ? `Are you sure you want to delete "${expenseToDelete.description}"? This cannot be undone.` : ""}
+                description={expenseToDelete ? `Are you sure you want to delete "${expenseToDelete.description}" expense? This cannot be undone.` : ""}
                 confirmLabel="Yes, delete"
                 cancelLabel="Cancel"
                 loading={deleting}

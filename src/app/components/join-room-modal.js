@@ -1,5 +1,5 @@
 "use client";
-import React from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { ToastContainer, toast } from 'react-toastify'
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
@@ -12,15 +12,24 @@ export default function JoinRoomModal({ show, onClose }) {
     const searchParams = useSearchParams();
     const inviteCodeParam = searchParams.get('inviteCode');
     const [inviteCode, setInviteCode] = useState(inviteCodeParam || "");
+    const token = localStorage.getItem('token');
     const router = useRouter();
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+
+    const joinRoom = useCallback(async () => {
+        if (!token) {
+            toast.error('Please login to join a room', TOAST_OPTIONS);
+            localStorage.setItem('redirectUrl', window.location.href);
+            setTimeout(() => {
+                router.push('/login');
+            }, 1000);
+            return;
+        }
         try {
             const res = await fetch('/api/rooms/join', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                    'Authorization': `Bearer ${token}`,
                 },
                 body: JSON.stringify({ inviteCode }),
             });
@@ -31,13 +40,27 @@ export default function JoinRoomModal({ show, onClose }) {
                 return;
             }
             toast.success(data.message, TOAST_OPTIONS);
-            router.push(`/rooms/${data.room._id}`);
+            localStorage.removeItem('redirectUrl');
+            setTimeout(() => {
+                router.push(`/rooms/${data.room._id}`);
+            }, 1500);
             onClose();
         } catch (error) {
             console.error(error);
             toast.error(error.message, TOAST_OPTIONS);
         }
+    }, [inviteCode, router, onClose, token]);
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        joinRoom();
     }
+
+    useEffect(() => {
+        if (inviteCodeParam) {
+            joinRoom();
+        }
+    }, [inviteCodeParam, joinRoom]);
 
     const handleCancel = () => {
         router.push('/rooms');

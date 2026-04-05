@@ -2,6 +2,7 @@ import connectDB from "@/lib/mongodb";
 import Otp from "@/models/Otp";
 import { generateOTP } from "@/lib/otp";
 import { sendEmail } from "@/lib/sendEmail";
+import User from "@/models/User";
 
 export async function POST(req) {
     try {
@@ -10,6 +11,12 @@ export async function POST(req) {
         const { email, purpose } = await req.json();
 
         const otp = generateOTP();
+
+        const user = await User.findOne({ email });
+
+        if (!user) {
+            return Response.json({ message: "User not found" }, { status: 404 });
+        }
 
         // delete old OTP if exists
         await Otp.deleteMany({ email, purpose });

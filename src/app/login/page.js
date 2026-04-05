@@ -14,6 +14,7 @@ export default function LoginPage() {
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
+    const redirectUrl = localStorage.getItem('redirectUrl');
 
     useEffect(() => {
         document.title = "Spliterr - Login";
@@ -46,7 +47,11 @@ export default function LoginPage() {
             setLoading(false);
 
             toast.success("Login successful!", TOAST_OPTIONS);
-            router.push("/rooms");
+            if (redirectUrl) {
+                router.push(redirectUrl);
+            } else {
+                router.push("/rooms");
+            }
         } catch (err) {
             toast.error("Something went wrong. Please try again.", TOAST_OPTIONS);
             setLoading(false);
