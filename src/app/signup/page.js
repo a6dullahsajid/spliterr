@@ -7,7 +7,8 @@ import "react-toastify/dist/ReactToastify.css";
 import styles from './signup.module.css'
 import Link from 'next/link'
 import { TOAST_OPTIONS } from "@/lib/toastOptions";
-
+import { FcGoogle } from "react-icons/fc";
+import { signIn } from "next-auth/react";
 export default function SignupPage() {
 
     const router = useRouter();
@@ -23,6 +24,10 @@ export default function SignupPage() {
     useEffect(() => {
         document.title = "Spliterr - Signup";
     }, []);
+
+    const sessionSignIn = () => {
+        signIn("google", { callbackUrl: "/auth/callback" });
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -180,6 +185,18 @@ export default function SignupPage() {
                     <p className={styles.loginLink}>
                         Already have an account? <Link href="/login">Login</Link>
                     </p>
+
+                    <div className={styles.googleButtonSeparator}> <div className={styles.line}></div> or <div className={styles.line}></div></div>
+                    <button
+                        type="button"
+                        onClick={sessionSignIn}
+                        className={styles.googleButton}
+                    >
+                        <span className={styles.googleButtonIcon} aria-hidden>
+                            <FcGoogle size={22} />
+                        </span>
+                        <span className={styles.googleButtonLabel}>Sign up with Google</span>
+                    </button>
                 </div>
             </form>
         </main>
