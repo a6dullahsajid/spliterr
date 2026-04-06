@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import Image from 'next/image';
 import { TOAST_OPTIONS } from "@/lib/toastOptions";
+import { signOut } from "next-auth/react";
 
 export default function Navbar() {
     const router = useRouter();
@@ -25,8 +26,7 @@ export default function Navbar() {
                 user = null;
             }
         }
-        // Sync localStorage → state after mount (SSR-safe); no localStorage on server.
-        // eslint-disable-next-line react-hooks/set-state-in-effect
+        
         setAuth({ loggedIn: !!token, user });
         const onAuthChanged = () => {
             const t = localStorage.getItem("token");
@@ -50,6 +50,7 @@ export default function Navbar() {
     }
 
     const logout = () => {
+        signOut();
         if (typeof window !== "undefined") {
             localStorage.removeItem("token");
             localStorage.removeItem("user");

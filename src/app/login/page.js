@@ -7,6 +7,8 @@ import Link from "next/link";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { TOAST_OPTIONS } from "@/lib/toastOptions";
+import { signIn } from "next-auth/react";
+import { FcGoogle } from "react-icons/fc";
 
 export default function LoginPage() {
     const router = useRouter();
@@ -14,7 +16,6 @@ export default function LoginPage() {
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
-
     useEffect(() => {
         document.title = "Spliterr - Login";
     }, []);
@@ -56,6 +57,11 @@ export default function LoginPage() {
             toast.error("Something went wrong. Please try again.", TOAST_OPTIONS);
             setLoading(false);
         }
+    };
+    const sessionSignIn = () => {
+        // OAuth must land on a client page that copies NextAuth session → localStorage.
+        // /rooms only trusts localStorage JWT, so going there first always looks "logged out".
+        signIn("google", { callbackUrl: "/auth/callback" });
     };
 
     return (
@@ -101,8 +107,20 @@ export default function LoginPage() {
                     <p className={styles.signupLink}>
                         Don&apos;t have an account? <Link href="/signup">Sign up</Link>
                     </p>
+
+                    <div className={styles.googleButtonSeparator}> <div className={styles.line}></div> or <div className={styles.line}></div></div>
+                    <button
+                        type="button"
+                        onClick={sessionSignIn}
+                        className={styles.googleButton}
+                    >
+                        <span className={styles.googleButtonIcon} aria-hidden>
+                            <FcGoogle size={22} />
+                        </span>
+                        <span className={styles.googleButtonLabel}>Sign in with Google</span>
+                    </button>
                 </div>
             </form>
-        </main>
+        </main >
     );
 }
