@@ -396,7 +396,7 @@ export default function RoomPage() {
                                                 {(() => {
                                                     const userId = user?.id ?? user?._id;
                                                     const paidById = expense?.paidBy?._id ?? expense?.paidBy?.id;
-                                                    const isLeader = room?.leader.name === user?.name;
+                                                    const isLeader = room?.leader?.name === user?.name;
                                                     const isExpenseCreator =
                                                         (userId && paidById && String(userId) === String(paidById)) ||
                                                         expense?.paidBy?.name === user?.name;

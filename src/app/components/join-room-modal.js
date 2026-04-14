@@ -12,13 +12,19 @@ export default function JoinRoomModal({ show, onClose }) {
     const searchParams = useSearchParams();
     const inviteCodeParam = searchParams.get('inviteCode');
     const [inviteCode, setInviteCode] = useState(inviteCodeParam || "");
-    const token = localStorage.getItem('token');
     const router = useRouter();
 
     const joinRoom = useCallback(async () => {
+        const token = typeof window !== "undefined" ? localStorage.getItem('token') : null;
+
         if (!token) {
             toast.error('Please login to join a room', TOAST_OPTIONS);
-            localStorage.setItem('redirectUrl', window.location.href);
+
+            if (typeof window !== "undefined") {
+                console.log('redirecting to', window.location.href);
+                localStorage.setItem('redirectUrl', window.location.href);
+            }
+
             setTimeout(() => {
                 router.push('/login');
             }, 1000);
@@ -40,16 +46,18 @@ export default function JoinRoomModal({ show, onClose }) {
                 return;
             }
             toast.success(data.message, TOAST_OPTIONS);
-            localStorage.removeItem('redirectUrl');
+            if (typeof window !== "undefined") {
+                localStorage.removeItem('redirectUrl');
+            }
             setTimeout(() => {
                 router.push(`/rooms/${data.room._id}`);
-            }, 1500);
+            }, 800);
             onClose();
         } catch (error) {
             console.error(error);
             toast.error(error.message, TOAST_OPTIONS);
         }
-    }, [inviteCode, router, onClose, token]);
+    }, [inviteCode, router, onClose]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();

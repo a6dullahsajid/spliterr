@@ -332,11 +332,11 @@
 
     .header {
         margin-bottom: 8px;
+        padding: 5px 12px;
     }
 
     .header h1 {
         font-size: 1.6rem;
-        width: 53%;
     }
 
     .header p {
@@ -350,7 +350,7 @@
 
     .headerActions {
         gap: 0.2rem;
-        width: 47%;
+        justify-content: flex-end;
     }
 
     .headerActions button {

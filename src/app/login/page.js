@@ -47,9 +47,10 @@ export default function LoginPage() {
             setLoading(false);
 
             toast.success("Login successful!", TOAST_OPTIONS);
-            const storedRedirect = localStorage.getItem("redirectUrl");
+            const storedRedirect = localStorage.getItem("redirectUrl").split("?");
+            console.log("storedRedirect", storedRedirect);
             if (storedRedirect) {
-                router.push(storedRedirect);
+                router.push(`rooms/join?${storedRedirect[1]}`);
             } else {
                 router.push("/rooms");
             }

@@ -10,6 +10,22 @@ export default function AuthCallbackPage() {
   const router = useRouter();
   const redirected = useRef(false);
 
+  const getStoredRedirectPath = () => {
+    if (typeof window === "undefined") return null;
+
+    const storedRedirect = localStorage.getItem("redirectUrl");
+    if (!storedRedirect) return null;
+
+    try {
+      const redirectUrl = new URL(storedRedirect);
+      if (redirectUrl.origin !== window.location.origin) return null;
+
+      return `${redirectUrl.pathname}${redirectUrl.search}${redirectUrl.hash}`;
+    } catch {
+      return null;
+    }
+  };
+
   useEffect(() => {
     if (redirected.current) return;
     if (status === "loading") return;
@@ -19,7 +35,9 @@ export default function AuthCallbackPage() {
       localStorage.setItem("token", session.customJwt);
       localStorage.setItem("user", JSON.stringify(session.user));
       window.dispatchEvent(new Event("auth:changed"));
-      router.replace("/rooms");
+      const redirectPath = getStoredRedirectPath();
+      localStorage.removeItem("redirectUrl");
+      router.replace(redirectPath || "/rooms");
       return;
     }
 

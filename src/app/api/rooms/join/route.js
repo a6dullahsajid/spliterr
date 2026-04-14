@@ -23,11 +23,13 @@ export async function POST(req) {
     }
     const isMember = room.members.some(member => member.toString() === user.userId);
     if (isMember) {
-      return Response.json({
-        message: "Already a member",
-        status: 400,
-        room
-      });
+      return Response.json(
+        {
+          message: "Already a member",
+          room
+        },
+        { status: 400 }
+      );
     }
 
     room.members.push(user.userId);
