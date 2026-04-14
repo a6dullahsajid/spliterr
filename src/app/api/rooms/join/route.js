@@ -28,7 +28,7 @@ export async function POST(req) {
           message: "Already a member",
           room
         },
-        { status: 400 }
+        { status: 200 }
       );
     }
 
