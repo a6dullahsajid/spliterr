@@ -33,6 +33,7 @@ export default function RoomPage() {
     const [showEditExpenseModal, setShowEditExpenseModal] = useState(false);
     const [expenseToDelete, setExpenseToDelete] = useState(null);
     const [expenseToEdit, setExpenseToEdit] = useState(null);
+    const [expandedParticipants, setExpandedParticipants] = useState({});
     const [deleting, setDeleting] = useState(false);
     const [showDetailedReport, setShowDetailedReport] = useState(false);
     const [showAllCards, setShowAllCards] = useState(false);
@@ -52,7 +53,7 @@ export default function RoomPage() {
                 hour12: true,
             })
 
-        return `${dd} ${month} ${yyyy}, ${time}`;
+        return `${dd} ${month}, ${yyyy}`;
     };
     useEffect(() => {
         if (typeof window === "undefined") return;
@@ -149,17 +150,17 @@ export default function RoomPage() {
             }
             setRoom(data.room);
         }
-        Promise.all([
-            getExpenses(),
-            getBalances(),
-            getSummary(),
-            getSimplifiedDebts(),
-            getRoom(),
-        ]).finally(() => {
-            setTimeout(() => {
-                setLoading(false);
-            }, 500);
+        getRoom();
+        getExpenses().then(() => {
+            setLoading(false);
         })
+        getBalances()
+        getSummary()
+        getSimplifiedDebts()
+        // Promise.all([
+        // ]).finally(() => {
+        //     setLoading(false);
+        // })
     }, [roomId, refreshKey]);
 
     useEffect(() => {
@@ -208,6 +209,13 @@ export default function RoomPage() {
         setShowSettleModal(true);
         setExpenseToSettle(expense);
     }
+
+    const toggleParticipants = (expenseId) => {
+        setExpandedParticipants((prev) => ({
+            ...prev,
+            [expenseId]: !prev[expenseId],
+        }));
+    };
     return (
         <>
             {loading && <LoadingOverlay />}
@@ -353,7 +361,7 @@ export default function RoomPage() {
                                         </>
                                     )}
                                 </div>
-                                <button className={styles.detailedSummaryButton} onClick={() => setShowAllCards(false)}>Hide detailed summary <FaChevronUp /></button>
+                                <button className={styles.detailedSummaryButton} onClick={() => { setShowAllCards(false); setShowDetailedReport(false) }}>Hide detailed summary <FaChevronUp /></button>
                             </section>
                         </>
                     )}
@@ -368,7 +376,7 @@ export default function RoomPage() {
                                     <th>Expense</th>
                                     <th>Paid By</th>
                                     <th>Participants</th>
-                                    <th>Timestamp</th>
+                                    <th>Date</th>
                                     <th>Amount</th>
                                     {/* <th>Status</th> */}
                                     <th>Action</th>
@@ -377,30 +385,12 @@ export default function RoomPage() {
 
                             <tbody>
                                 {expenses?.map((expense) => (
-                                    <tr key={expense._id}>
+                                    <tr key={expense._id} className={expandedParticipants[expense._id] ? styles.mobileExpandedRow : ""}>
                                         <td>{expense.description}</td>
                                         <td style={{ color: user?.name === expense.paidBy.name ? '#0adc2a' : '#white' }}>{expense.paidBy.name}</td>
                                         <td>{expense.participants.map(p => p.name).join(", ")}</td>
                                         <td>{formatExpenseTimestamp(expense.createdAt)}</td>
                                         <td>₹{expense.amount}</td>
-                                        {/* <td>
-                                            <button onClick={() => {
-                                                const userId = user?.id ?? user?._id;
-                                                const paidById = expense?.paidBy?._id ?? expense?.paidBy?.id;
-                                                const isLeader = room?.leader.name === user?.name;
-                                                const isExpenseCreator =
-                                                    (userId && paidById && String(userId) === String(paidById)) ||
-                                                    expense?.paidBy?.name === user?.name;
-                                                const canSettle = isLeader || isExpenseCreator;
-                                                if (canSettle) {
-                                                    toggleSettle(expense);
-                                                } else {
-                                                    toast.error("Only leader or creator can settle this expense", TOAST_OPTIONS);
-                                                }
-                                            }} className={expense.settled ? styles.settled : styles.pending}>
-                                                {expense.settled ? "Settled" : "Pending"}
-                                            </button>
-                                        </td> */}
                                         <td>
                                             <div className={styles.actionButtons}>
                                                 {(() => {
@@ -410,9 +400,9 @@ export default function RoomPage() {
                                                     const isExpenseCreator =
                                                         (userId && paidById && String(userId) === String(paidById)) ||
                                                         expense?.paidBy?.name === user?.name;
-
                                                     const canEdit = isLeader || isExpenseCreator;
                                                     const canDelete = isLeader || isExpenseCreator;
+                                                    console.log(canEdit, canDelete, expense.description);
 
                                                     return (
                                                         <>
@@ -436,6 +426,16 @@ export default function RoomPage() {
                                                     );
                                                 })()}
                                             </div>
+                                        </td>
+                                        <td>
+                                            <button
+                                                type="button"
+                                                className={styles.mobileParticipantsToggle}
+                                                onClick={() => toggleParticipants(expense._id)}
+                                            >
+                                                {expandedParticipants[expense._id] ? <FaChevronUp/> : <FaChevronDown />}
+                                                {/* {expandedParticipants[expense._id] ? <FaChevronUp/> : <FaChevronDown />} */}
+                                            </button>
                                         </td>
                                     </tr>
                                 ))}

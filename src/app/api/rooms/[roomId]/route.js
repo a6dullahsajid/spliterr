@@ -7,7 +7,7 @@ export async function GET(req, context) {
     try {
         await connectDB();
 
-        const user = verifyToken(req);
+        // const user = verifyToken(req);
 
         const { roomId } = await context.params;
 
