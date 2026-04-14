@@ -71,22 +71,45 @@ export default function RoomsPage() {
                     {rooms.length === 0 && (
                         <p>No groups yet</p>
                     )}
-                    {rooms.map(room => (
-                        <div onClick={() => router.push(`/rooms/${room._id}`)} key={room._id} className={styles.roomCard}>
-                            <h3>{room.name}</h3>
-                            <p><div>Leader:</div> {room.leader.name}</p>
-                            <p><div>Members:</div>
-                                <div className={styles.membersList}>
-                                    {room.members.map((member, index) => {
-                                        return (
+                    {rooms.map((room) => {
+                        const totalMembers = room.members.length;
+                        const previewMembers = room.members.slice(0, 4);
+                        const remainingMembers = Math.max(totalMembers - previewMembers.length, 0);
 
-                                            <span key={index}>{member.name}{index < room.members.length - 1 ? ', ' : ''}</span>
-                                        )
-                                    })}
+                        return (
+                            <article
+                                onClick={() => router.push(`/rooms/${room._id}`)}
+                                key={room._id}
+                                className={styles.roomCard}
+                            >
+                                <div className={styles.roomCardTop}>
+                                    <h3>{room.name}</h3>
+                                    <span className={styles.memberCount}>{totalMembers} members</span>
                                 </div>
-                            </p>
-                        </div>
-                    ))}
+
+                                <div className={styles.roomMeta}>
+                                    <span className={styles.metaLabel}>Leader</span>
+                                    <span className={styles.metaValue}>{room.leader.name}</span>
+                                </div>
+
+                                <div className={styles.roomMeta}>
+                                    <span className={styles.metaLabel}>Members</span>
+                                    <div className={styles.membersList}>
+                                        {previewMembers.map((member) => (
+                                            <span key={member._id || member.name} className={styles.memberChip}>
+                                                {member.name}
+                                            </span>
+                                        ))}
+                                        {remainingMembers > 0 && (
+                                            <span className={styles.memberChip}>+{remainingMembers} more</span>
+                                        )}
+                                    </div>
+                                </div>
+
+                                <p className={styles.openRoomHint}>Tap to open room</p>
+                            </article>
+                        );
+                    })}
                 </div>
             </div>
         </>

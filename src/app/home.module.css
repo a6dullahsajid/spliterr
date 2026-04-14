@@ -1,6 +1,8 @@
 .homeContainer {
     padding: 40px 20px;
     color: white;
+    font-family: 'Times New Roman', Times, serif;
+    background: rgb(12, 12, 12);
 }
 
 /* HERO */
@@ -10,14 +12,21 @@
 }
 
 .homeTitle {
-    font-size: 44px;
-    font-weight: 700;
+    font-size: 54px;
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: 0.15rem;
+    word-spacing: 0.15rem;
 }
 
 .homeSubtitle {
     margin-top: 16px;
     color: #9ca3af;
-    font-size: 16px;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: 0.09rem;
+    word-spacing: 0.08rem;
 }
 
 .homeButtons {
@@ -25,13 +34,15 @@
     display: flex;
     justify-content: center;
     gap: 12px;
+    font-size: 14px;
+    letter-spacing: 0.06rem;
 }
 
 /* BUTTONS */
 .primaryBtn {
     background: linear-gradient(135deg, #0adc2a, #13a357);
     border: none;
-    padding: 10px 18px;
+    padding: 0px 12px;
     border-radius: 8px;
     font-weight: 600;
     cursor: pointer;
@@ -63,7 +74,7 @@
     font-size: 28px;
     margin-bottom: 20px;
     font-weight: 600;
-    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
 /* DEMO */
@@ -166,23 +177,29 @@
 
     .homeTitle {
         font-size: 32px;
+        letter-spacing: 0.02rem;
+        word-spacing: 0.12rem;
     }
 
     .homeSubtitle {
-        margin-top: 10px;
-        font-size: 14px;
+        margin-top: 14px;
+        font-size: 13px;
+        letter-spacing: 0.02rem;
+        word-spacing: 0.02rem;
     }
 
     .homeButtons {
         margin-top: 15px;
         gap: 8px;
+        letter-spacing: 0.01rem;
+        word-spacing: 0.01rem;
     }
 
     /* BUTTONS */
     .primaryBtn {
         padding: 5px 8px;
         border-radius: 6px;
-        font-size: 14px;
+        font-size: 12px;
     }
 
     .primaryBtn:hover {
@@ -192,7 +209,7 @@
     .secondaryBtn {
         padding: 5px 8px;
         border-radius: 6px;
-        font-size: 14px;
+        font-size: 12px;
     }
 
     /* SECTION TITLE */

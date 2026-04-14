@@ -17,9 +17,9 @@ export default function SignupPage() {
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
-    const [otp, setOtp] = useState('');
-    const [isOtpSent, setIsOtpSent] = useState(false);
-    const [otpVerified, setOtpVerified] = useState(false);
+    // const [otp, setOtp] = useState('');
+    // const [isOtpSent, setIsOtpSent] = useState(false);
+    // const [otpVerified, setOtpVerified] = useState(false);
 
     useEffect(() => {
         document.title = "Spliterr - Signup";
@@ -31,10 +31,10 @@ export default function SignupPage() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (!otpVerified) {
-            toast.error("Please verify OTP", TOAST_OPTIONS);
-            return;
-        }
+        // if (!otpVerified) {
+        //     toast.error("Please verify OTP", TOAST_OPTIONS);
+        //     return;
+        // }
         setLoading(true);
 
         try {
