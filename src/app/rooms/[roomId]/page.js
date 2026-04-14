@@ -387,7 +387,7 @@ export default function RoomPage() {
                                 {expenses?.map((expense) => (
                                     <tr key={expense._id} className={expandedParticipants[expense._id] ? styles.mobileExpandedRow : ""}>
                                         <td>{expense.description}</td>
-                                        <td style={{ color: user?.name === expense.paidBy.name ? '#0adc2a' : '#white' }}>{expense.paidBy.name}</td>
+                                        <td style={{ color: user?.name === expense?.paidBy?.name ? '#0adc2a' : '#white' }}>{expense?.paidBy?.name}</td>
                                         <td>{expense.participants.map(p => p.name).join(", ")}</td>
                                         <td>{formatExpenseTimestamp(expense.createdAt)}</td>
                                         <td>₹{expense.amount}</td>
