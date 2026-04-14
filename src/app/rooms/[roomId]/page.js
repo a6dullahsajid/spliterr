@@ -16,18 +16,18 @@ import { TOAST_OPTIONS } from "@/lib/toastOptions";
 export default function RoomPage() {
     const { roomId } = useParams();
     const router = useRouter();
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState({});
     const [refreshKey, setRefreshKey] = useState(0);
-    const [expenses, setExpenses] = useState(null);
-    const [balances, setBalances] = useState(null);
+    const [expenses, setExpenses] = useState([]);
+    const [balances, setBalances] = useState([]);
     const [summary, setSummary] = useState({
         totalRoomExpense: 0,
         youPaid: 0,
         youOwe: 0,
         netBalance: 0,
     });
-    const [simplifiedDebts, setSimplifiedDebts] = useState(null);
-    const [room, setRoom] = useState(null);
+    const [simplifiedDebts, setSimplifiedDebts] = useState([]);
+    const [room, setRoom] = useState({});
     const [loading, setLoading] = useState(true);
     const [showAddExpenseModal, setShowAddExpenseModal] = useState(false);
     const [showEditExpenseModal, setShowEditExpenseModal] = useState(false);
@@ -205,10 +205,10 @@ export default function RoomPage() {
         }
     }
 
-    const toggleSettle = async (expense) => {
-        setShowSettleModal(true);
-        setExpenseToSettle(expense);
-    }
+    // const toggleSettle = async (expense) => {
+    //     setShowSettleModal(true);
+    //     setExpenseToSettle(expense);
+    // }
 
     const toggleParticipants = (expenseId) => {
         setExpandedParticipants((prev) => ({

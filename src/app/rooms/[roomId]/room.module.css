@@ -336,6 +336,7 @@
 
     .header h1 {
         font-size: 1.6rem;
+        width: 53%;
     }
 
     .header p {
@@ -349,6 +350,7 @@
 
     .headerActions {
         gap: 0.2rem;
+        width: 47%;
     }
 
     .headerActions button {
@@ -356,6 +358,13 @@
         padding: 0.3rem 0.5rem;
         border-radius: 7px;
         gap: 0.2rem;
+    }
+
+    .headerActions button:hover {
+        transform: translateY(-1px);
+        background: #1a1a1a;
+        color: white;
+        box-shadow: 0 0px 0px rgba(0, 0, 0, 0);
     }
 
     .headerActions button svg {
