@@ -146,6 +146,7 @@ export default function RoomPage() {
             const data = await res.json();
             if (!res.ok) {
                 toast.error(data.message, TOAST_OPTIONS);
+                router.push("/rooms");
                 return;
             }
             setRoom(data.room);
