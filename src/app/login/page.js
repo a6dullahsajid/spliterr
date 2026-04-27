@@ -32,7 +32,6 @@ export default function LoginPage() {
             });
 
             const data = await res.json();
-            console.log(data);
 
             if (!res.ok) {
                 toast.error(data.message || "Login failed", TOAST_OPTIONS);
@@ -47,14 +46,15 @@ export default function LoginPage() {
             setLoading(false);
 
             toast.success("Login successful!", TOAST_OPTIONS);
-            const storedRedirect = localStorage.getItem("redirectUrl").split("?");
+            const storedRedirect = localStorage.getItem("redirectUrl");
             console.log("storedRedirect", storedRedirect);
             if (storedRedirect) {
-                router.push(`rooms/join?${storedRedirect[1]}`);
+                router.push(`rooms/join?${storedRedirect.split("?")[1]}`);
             } else {
                 router.push("/rooms");
             }
         } catch (err) {
+            console.log(err);
             toast.error("Something went wrong. Please try again.", TOAST_OPTIONS);
             setLoading(false);
         }

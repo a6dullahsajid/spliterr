@@ -66,16 +66,16 @@ export default function Navbar() {
                 <h1 className={styles.logoText}>
                     <Link href="/"><Image src="/logo.png" alt="Spliterr" width={100} height={100} />pliterr</Link></h1>
             </div>
-            <div className={styles.menuContainer}>
+            <div className={styles.menuContainer} onMouseLeave={() => setTimeout(() => toggleDropDownMenu(), 300)}>
                 {auth.loggedIn ? (
                     <div className={styles.dropdownMenu}>
-                        <button onClick={() => toggleDropDownMenu()}>{displayName} <span className={styles.dropdownMenuIcon}><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-chevron-down"><path d="m6 9 6 6 6-6" /></svg></span></button>
+                        <button onMouseEnter={() => toggleDropDownMenu()} onClick={() => toggleDropDownMenu()}>{displayName} <span className={styles.dropdownMenuIcon}><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-chevron-down"><path d="m6 9 6 6 6-6" /></svg></span></button>
                         {showDropDown && (
                             <div className={styles.dropdownMenuContent}>
-                                <Link href="/rooms">Groups</Link>
-                                <Link href="/rooms/join">Join a Group</Link>
-                                <Link href="/rooms/create">Create a Group</Link>
-                                <Link href="/" onClick={logout}>Logout</Link>
+                                <Link href="/rooms" onClick={() => toggleDropDownMenu()}>Groups</Link>
+                                <Link href="/rooms/join" onClick={() => toggleDropDownMenu()}>Join a Group</Link>
+                                <Link href="/rooms/create" onClick={() => toggleDropDownMenu()}>Create a Group</Link>
+                                <Link href="/" onClick={() => {logout(); toggleDropDownMenu()}}>Logout</Link>
                             </div>
                         )}
                     </div>

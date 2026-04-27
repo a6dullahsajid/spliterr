@@ -337,6 +337,7 @@
 
     .header h1 {
         font-size: 1.6rem;
+        white-space: nowrap;
     }
 
     .header p {
@@ -350,6 +351,7 @@
 
     .headerActions {
         gap: 0.2rem;
+        flex-wrap: wrap;
         justify-content: flex-end;
     }
 
@@ -357,6 +359,7 @@
         font-size: 0.65rem;
         padding: 0.3rem 0.5rem;
         border-radius: 7px;
+        white-space: nowrap;
         gap: 0.2rem;
     }
 

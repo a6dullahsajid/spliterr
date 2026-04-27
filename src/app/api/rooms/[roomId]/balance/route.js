@@ -24,7 +24,7 @@ export async function GET(req, context) {
 
         if (!room) {
             return Response.json(
-                { message: "Room not found" },
+                { message: "Group not found" },
                 { status: 404 }
             );
         }

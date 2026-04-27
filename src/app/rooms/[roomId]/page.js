@@ -35,6 +35,9 @@ export default function RoomPage() {
     const [expenseToEdit, setExpenseToEdit] = useState(null);
     const [expandedParticipants, setExpandedParticipants] = useState({});
     const [deleting, setDeleting] = useState(false);
+    const [deletingRoom, setDeletingRoom] = useState(false);
+    const [removingMemberId, setRemovingMemberId] = useState(null);
+    const [showDeleteRoomModal, setShowDeleteRoomModal] = useState(false);
     const [showDetailedReport, setShowDetailedReport] = useState(false);
     const [showAllCards, setShowAllCards] = useState(false);
     // const [showSettleModal, setShowSettleModal] = useState(false);
@@ -158,10 +161,6 @@ export default function RoomPage() {
         getBalances()
         getSummary()
         getSimplifiedDebts()
-        // Promise.all([
-        // ]).finally(() => {
-        //     setLoading(false);
-        // })
     }, [roomId, refreshKey]);
 
     useEffect(() => {
@@ -217,6 +216,98 @@ export default function RoomPage() {
             [expenseId]: !prev[expenseId],
         }));
     };
+    const deleteRoom = async () => {
+        setDeletingRoom(true);
+        try {
+            const token =
+                typeof window !== "undefined"
+                    ? localStorage.getItem("token")
+                    : null;
+
+            if (!token) {
+                toast.error("Please login again.", TOAST_OPTIONS);
+                setDeletingRoom(false);
+                return;
+            }
+
+            const res = await fetch(`/api/rooms/${roomId}`, {
+                method: "DELETE",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+            const data = await res.json();
+
+            if (!res.ok) {
+                toast.error(data.message || "Failed to delete room", TOAST_OPTIONS);
+                setDeletingRoom(false);
+                return;
+            }
+
+            toast.success("Room deleted successfully", TOAST_OPTIONS);
+            setDeletingRoom(false);
+            setShowDeleteRoomModal(false);
+            router.push("/rooms");
+        } catch (error) {
+            console.error(error);
+            toast.error("Failed to delete room", TOAST_OPTIONS);
+            setDeletingRoom(false);
+        }
+    };
+    const removeMember = async (member) => {
+        const targetUserId = member?._id ?? member?.id;
+        if (!targetUserId) return;
+
+        setRemovingMemberId(String(targetUserId));
+        try {
+            const token =
+                typeof window !== "undefined"
+                    ? localStorage.getItem("token")
+                    : null;
+
+            if (!token) {
+                toast.error("Please login again.", TOAST_OPTIONS);
+                setRemovingMemberId(null);
+                return;
+            }
+
+            const res = await fetch(`/api/rooms/${roomId}/remove`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify({ userId: targetUserId }),
+            });
+
+            const data = await res.json();
+
+            if (!res.ok) {
+                toast.error(data.message || "Failed to remove member", TOAST_OPTIONS);
+                setRemovingMemberId(null);
+                return;
+            }
+
+            const isSelf = String(targetUserId) === String(userId);
+            toast.success(isSelf ? "You left the room successfully" : "Member removed successfully", TOAST_OPTIONS);
+            setRemovingMemberId(null);
+
+            if (isSelf) {
+                router.push("/rooms");
+                return;
+            }
+
+            setRefreshKey((k) => k + 1);
+        } catch (error) {
+            console.error(error);
+            toast.error("Failed to remove member", TOAST_OPTIONS);
+            setRemovingMemberId(null);
+        }
+    };
+    const userId = user?.id ?? user?._id;
+    const leaderId = room?.leader?._id ?? room?.leader?.id;
+    const isLeader = Boolean(userId && leaderId && String(userId) === String(leaderId));
     return (
         <>
             {loading && <LoadingOverlay />}
@@ -230,17 +321,16 @@ export default function RoomPage() {
                 onConfirm={deleteExpense}
                 onCancel={() => !deleting && setExpenseToDelete(null)}
             />
-            {/* <SettleOverlay
-                open={showSettleModal}
-                expense={expenseToSettle}
-                onCancel={() => setShowSettleModal(false)}
-                loading={settling}
-                onConfirm={() => {
-                    setShowSettleModal(false);
-                    setExpenseToSettle(null);
-                    setRefreshKey((k) => k + 1);
-                }}
-            /> */}
+            <DeleteOverlay
+                open={showDeleteRoomModal}
+                title="Delete room"
+                description={room?.name ? `Are you sure you want to delete "${room.name}"? This will also delete all expenses and cannot be undone.` : "Are you sure you want to delete this room? This action cannot be undone."}
+                confirmLabel="Yes, delete room"
+                cancelLabel="Cancel"
+                loading={deletingRoom}
+                onConfirm={deleteRoom}
+                onCancel={() => !deletingRoom && setShowDeleteRoomModal(false)}
+            />
             {showAddExpenseModal && (
                 <AddExpense
                     show={showAddExpenseModal}
@@ -282,6 +372,11 @@ export default function RoomPage() {
                                 navigator.clipboard.writeText(`${window.location.origin}/rooms/join?inviteCode=${room?.inviteCode}`);
                                 toast.success('Invite link copied to clipboard', TOAST_OPTIONS);
                             }}>Invite <FaLink /></button>
+                            {isLeader && (
+                                <button type="button" onClick={() => setShowDeleteRoomModal(true)}>
+                                    Delete Room <FaTrash />
+                                </button>
+                            )}
                         </div>
                     </section>
 
@@ -330,6 +425,23 @@ export default function RoomPage() {
                                     {room?.members?.map((m) => (
                                         <div key={m._id} className={styles.member}>
                                             {m.name}
+                                            {(() => {
+                                                const memberId = m?._id ?? m?.id;
+                                                const isMemberLeader = Boolean(memberId && leaderId && String(memberId) === String(leaderId));
+                                                const canRemove = !isMemberLeader && (isLeader || String(memberId) === String(userId));
+                                                if (!canRemove) return null;
+
+                                                return (
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => removeMember(m)}
+                                                        disabled={removingMemberId === String(memberId)}
+                                                        style={{ marginLeft: "8px", color: "#ff6b6b", fontSize: "0.75rem" }}
+                                                    >
+                                                        {String(memberId) === String(userId) ? "Leave" : "Remove"}
+                                                    </button>
+                                                );
+                                            })()}
                                         </div>
                                     ))}
                                 </div>
@@ -371,7 +483,7 @@ export default function RoomPage() {
                     <section className={styles.tableSection}>
                         <h3>Expenses</h3>
 
-                        <table className={styles.expensesContainer}>
+                        {expenses?.length > 0 && <table className={styles.expensesContainer}>
                             <thead>
                                 <tr>
                                     <th>Expense</th>
@@ -397,7 +509,8 @@ export default function RoomPage() {
                                                 {(() => {
                                                     const userId = user?.id ?? user?._id;
                                                     const paidById = expense?.paidBy?._id ?? expense?.paidBy?.id;
-                                                    const isLeader = room?.leader?.name === user?.name;
+                                                    const leaderId = room?.leader?._id ?? room?.leader?.id;
+                                                    const isLeader = Boolean(userId && leaderId && String(userId) === String(leaderId));
                                                     const isExpenseCreator =
                                                         (userId && paidById && String(userId) === String(paidById)) ||
                                                         expense?.paidBy?.name === user?.name;
@@ -442,7 +555,8 @@ export default function RoomPage() {
                                 ))}
                             </tbody>
                         </table>
-
+                        }
+                        {expenses?.length === 0 && <p className='text-center text-gray-400'>No expenses yet. Add one to get started!</p>}
                     </section>
                 </div>
             </main>

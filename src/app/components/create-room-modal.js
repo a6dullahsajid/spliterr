@@ -37,6 +37,7 @@ export default function CreateGroupModal({ show, onClose }) {
             }
             toast.success(data.message, TOAST_OPTIONS);
             setLoading(false);
+            router.push(`/rooms/${data.room._id}`);
             onClose();
         } catch (error) {
             console.error(error);
